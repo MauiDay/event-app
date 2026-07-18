@@ -75,7 +75,7 @@
                         <Label
                             FontFamily="PoppinsSemiBold"
                             FontSize="17"
-                            IsVisible="{Binding CountdownText, Converter={StaticResource StringNotEmptyConverter}}"
+                            IsVisible="{=HasCountdown}"
                             Text="{Binding CountdownText}"
                             TextColor="{StaticResource BrandDeepPink}" />
                     </VerticalStackLayout>

@@ -47,7 +47,7 @@
 
                 <Border
                     AutomationId="ScheduleEmptyState"
-                    IsVisible="{Binding HasSessions, Converter={StaticResource InvertedBoolConverter}}"
+                    IsVisible="{!HasSessions}"
                     Style="{StaticResource CardBorder}">
                     <VerticalStackLayout Spacing="8">
                         <Label Style="{StaticResource SectionTitleLabel}" Text="The program is on its way" />

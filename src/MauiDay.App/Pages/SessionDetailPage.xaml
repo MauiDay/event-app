@@ -89,7 +89,7 @@
             </VerticalStackLayout>
 
             <Border
-                IsVisible="{Binding HasSpeakers, Converter={StaticResource InvertedBoolConverter}}"
+                IsVisible="{!HasSpeakers}"
                 Style="{StaticResource SubtleBorder}">
                 <Label
                     Style="{StaticResource SecondaryLabel}"

@@ -33,7 +33,7 @@
                             VerticalOptions="Center" />
                         <Image
                             Aspect="AspectFill"
-                            IsVisible="{Binding ProfilePicture, Converter={StaticResource NotNullConverter}}"
+                            IsVisible="{=HasProfilePicture}"
                             SemanticProperties.Description=""
                             Source="{Binding ProfilePicture}" />
                     </Grid>
@@ -87,7 +87,7 @@
             </VerticalStackLayout>
 
             <Border
-                IsVisible="{Binding HasSessions, Converter={StaticResource InvertedBoolConverter}}"
+                IsVisible="{!HasSessions}"
                 Style="{StaticResource SubtleBorder}">
                 <Label
                     Style="{StaticResource SecondaryLabel}"

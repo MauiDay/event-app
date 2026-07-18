@@ -7,7 +7,7 @@
     Title="Venue"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons"
     xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
 
     <ScrollView>
@@ -22,8 +22,15 @@
                         HeightRequest="40"
                         HorizontalOptions="Start"
                         SemanticProperties.Description=""
-                        WidthRequest="40"
-                        mi:MauiIcon.Value="{mi:Fluent Icon=Location24, IconSize=38, IconColor={StaticResource BrandPink}}" />
+                        WidthRequest="40">
+                        <Image.Source>
+                            <FontImageSource
+                                Color="{StaticResource BrandPink}"
+                                FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                Glyph="{x:Static icons:FluentIconsRegular.Location24}"
+                                Size="38" />
+                        </Image.Source>
+                    </Image>
                     <Label
                         Style="{StaticResource PageTitleLabel}"
                         Text="{Binding Name}"

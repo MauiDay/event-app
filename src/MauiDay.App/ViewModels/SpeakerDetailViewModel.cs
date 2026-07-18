@@ -36,6 +36,8 @@ public sealed partial class SpeakerDetailViewModel(
     [ObservableProperty]
     private IReadOnlyList<SessionCardModel> _sessions = [];
 
+    public bool HasProfilePicture => ProfilePicture is not null;
+
     public bool HasTagLine => !string.IsNullOrWhiteSpace(TagLine);
 
     public bool HasLinks => Links.Count > 0;
@@ -86,6 +88,7 @@ public sealed partial class SpeakerDetailViewModel(
                 timeProvider.GetUtcNow()))
             .ToArray();
         StatusMessage = snapshot.Notice;
+        OnPropertyChanged(nameof(HasProfilePicture));
         OnPropertyChanged(nameof(HasTagLine));
         OnPropertyChanged(nameof(HasLinks));
         OnPropertyChanged(nameof(HasSessions));

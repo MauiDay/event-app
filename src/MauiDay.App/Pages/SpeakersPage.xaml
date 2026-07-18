@@ -40,7 +40,7 @@
 
                 <Border
                     AutomationId="SpeakersEmptyState"
-                    IsVisible="{Binding HasSpeakers, Converter={StaticResource InvertedBoolConverter}}"
+                    IsVisible="{!HasSpeakers}"
                     Style="{StaticResource CardBorder}">
                     <VerticalStackLayout Spacing="8">
                         <Label Style="{StaticResource SectionTitleLabel}" Text="Speakers coming soon" />

@@ -12,36 +12,48 @@
     Shell.TabBarUnselectedColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
+    xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons">
 
     <TabBar>
-        <Tab
-            Title="Today"
-            mi:MauiIcon.Value="{mi:Fluent Icon=Home24}">
+        <Tab Title="Today">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                    Glyph="{x:Static icons:FluentIconsRegular.Home24}" />
+            </Tab.Icon>
             <ShellContent
                 x:Name="TodayContent"
                 Route="today"
                 Title="Today" />
         </Tab>
-        <Tab
-            Title="Schedule"
-            mi:MauiIcon.Value="{mi:Fluent Icon=CalendarLtr24}">
+        <Tab Title="Schedule">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                    Glyph="{x:Static icons:FluentIconsRegular.Calendar24}" />
+            </Tab.Icon>
             <ShellContent
                 x:Name="ScheduleContent"
                 Route="schedule"
                 Title="Schedule" />
         </Tab>
-        <Tab
-            Title="Speakers"
-            mi:MauiIcon.Value="{mi:Fluent Icon=PeopleCommunity24}">
+        <Tab Title="Speakers">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                    Glyph="{x:Static icons:FluentIconsRegular.PeopleCommunity24}" />
+            </Tab.Icon>
             <ShellContent
                 x:Name="SpeakersContent"
                 Route="speakers"
                 Title="Speakers" />
         </Tab>
-        <Tab
-            Title="Info"
-            mi:MauiIcon.Value="{mi:Fluent Icon=Info24}">
+        <Tab Title="Info">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                    Glyph="{x:Static icons:FluentIconsRegular.Info24}" />
+            </Tab.Icon>
             <ShellContent
                 x:Name="InfoContent"
                 Route="info"

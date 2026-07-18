@@ -20,7 +20,8 @@ public sealed partial class AboutViewModel(
 
     public string LicenseSummary =>
         "Poppins and Inter are licensed under the SIL Open Font License 1.1. " +
-        "Fluent icons are provided through MauiIcons. Event content is provided by MAUI Day and Sessionize.";
+        "Fluent System Icons are provided by Microsoft under the MIT License. " +
+        "Event content is provided by MAUI Day and Sessionize.";
 
     public async Task LoadAsync()
     {

@@ -61,6 +61,8 @@ public sealed partial class TodayViewModel : DataViewModel
 
     public bool HasNextSession => NextSession is not null;
 
+    public bool HasCountdown => !string.IsNullOrEmpty(CountdownText);
+
     public TodayViewModel(
         IAppDataService dataService,
         IAppNavigator navigator,
@@ -142,6 +144,7 @@ public sealed partial class TodayViewModel : DataViewModel
 
         OnPropertyChanged(nameof(HasCurrentSession));
         OnPropertyChanged(nameof(HasNextSession));
+        OnPropertyChanged(nameof(HasCountdown));
     }
 
     [RelayCommand]

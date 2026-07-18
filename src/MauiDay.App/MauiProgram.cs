@@ -2,7 +2,7 @@
 using MauiDay.App.Services;
 using MauiDay.App.ViewModels;
 using MauiDay.Core.Services;
-using MauiIcons.Fluent;
+using IconFont.Maui.FluentIcons;
 using Microsoft.Extensions.Logging;
 #if DEBUG
 using Microsoft.Maui.DevFlow.Agent;
@@ -24,7 +24,7 @@ public static class MauiProgram
 				fonts.AddFont("Poppins-Medium.ttf", "PoppinsMedium");
 				fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemiBold");
 			})
-			.UseFluentMauiIcons();
+			.UseFluentIcons();
 
 		builder.Services.AddSingleton(
 			new HttpClient { Timeout = Timeout.InfiniteTimeSpan });

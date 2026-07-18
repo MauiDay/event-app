@@ -6,7 +6,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:MauiDay.App.Controls"
-    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
+    xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons">
 
     <Border
         AutomationId="{Binding AutomationId, Source={x:Reference Root}}"
@@ -112,8 +112,15 @@
                 IsVisible="{Binding Session.IsNavigable, Source={x:Reference Root}}"
                 SemanticProperties.Description=""
                 VerticalOptions="Center"
-                WidthRequest="20"
-                mi:MauiIcon.Value="{mi:Fluent Icon=ChevronRight24, IconSize=20, IconColor={AppThemeBinding Light=#52607E, Dark=#BBC6E2}}" />
+                WidthRequest="20">
+                <Image.Source>
+                    <FontImageSource
+                        Color="{AppThemeBinding Light=#52607E, Dark=#BBC6E2}"
+                        FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                        Glyph="{x:Static icons:FluentIconsRegular.ChevronRight24}"
+                        Size="20" />
+                </Image.Source>
+            </Image>
         </Grid>
     </Border>
 </ContentView>

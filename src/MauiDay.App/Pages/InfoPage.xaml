@@ -6,7 +6,7 @@
     Shell.NavBarIsVisible="False"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons"
     xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
 
     <ScrollView>
@@ -25,8 +25,15 @@
                         HeightRequest="30"
                         SemanticProperties.Description=""
                         VerticalOptions="Start"
-                        WidthRequest="30"
-                        mi:MauiIcon.Value="{mi:Fluent Icon=Location24, IconSize=28, IconColor={StaticResource BrandDeepPink}}" />
+                        WidthRequest="30">
+                        <Image.Source>
+                            <FontImageSource
+                                Color="{StaticResource BrandDeepPink}"
+                                FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                Glyph="{x:Static icons:FluentIconsRegular.Location24}"
+                                Size="28" />
+                        </Image.Source>
+                    </Image>
                     <VerticalStackLayout Grid.Column="1" Spacing="5">
                         <Label Style="{StaticResource CardTitleLabel}" Text="{Binding VenueName}" />
                         <Label Style="{StaticResource SecondaryLabel}" Text="{Binding VenueAddress}" />
@@ -36,8 +43,15 @@
                         HeightRequest="20"
                         SemanticProperties.Description=""
                         VerticalOptions="Center"
-                        WidthRequest="20"
-                        mi:MauiIcon.Value="{mi:Fluent Icon=ChevronRight24, IconSize=20, IconColor={StaticResource BrandPurple}}" />
+                        WidthRequest="20">
+                        <Image.Source>
+                            <FontImageSource
+                                Color="{StaticResource BrandPurple}"
+                                FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                Glyph="{x:Static icons:FluentIconsRegular.ChevronRight24}"
+                                Size="20" />
+                        </Image.Source>
+                    </Image>
                 </Grid>
             </Border>
 
@@ -50,8 +64,15 @@
                         HeightRequest="30"
                         SemanticProperties.Description=""
                         VerticalOptions="Start"
-                        WidthRequest="30"
-                        mi:MauiIcon.Value="{mi:Fluent Icon=Handshake24, IconSize=28, IconColor={StaticResource BrandDeepPink}}" />
+                        WidthRequest="30">
+                        <Image.Source>
+                            <FontImageSource
+                                Color="{StaticResource BrandDeepPink}"
+                                FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                Glyph="{x:Static icons:FluentIconsRegular.Handshake24}"
+                                Size="28" />
+                        </Image.Source>
+                    </Image>
                     <VerticalStackLayout Grid.Column="1" Spacing="5">
                         <Label Style="{StaticResource CardTitleLabel}" Text="Sponsors &amp; supporters" />
                         <Label Style="{StaticResource SecondaryLabel}" Text="{Binding PartnerSummary}" />
@@ -61,8 +82,15 @@
                         HeightRequest="20"
                         SemanticProperties.Description=""
                         VerticalOptions="Center"
-                        WidthRequest="20"
-                        mi:MauiIcon.Value="{mi:Fluent Icon=ChevronRight24, IconSize=20, IconColor={StaticResource BrandPurple}}" />
+                        WidthRequest="20">
+                        <Image.Source>
+                            <FontImageSource
+                                Color="{StaticResource BrandPurple}"
+                                FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                Glyph="{x:Static icons:FluentIconsRegular.ChevronRight24}"
+                                Size="20" />
+                        </Image.Source>
+                    </Image>
                 </Grid>
             </Border>
 
@@ -75,8 +103,15 @@
                         HeightRequest="30"
                         SemanticProperties.Description=""
                         VerticalOptions="Start"
-                        WidthRequest="30"
-                        mi:MauiIcon.Value="{mi:Fluent Icon=ShieldCheckmark24, IconSize=28, IconColor={StaticResource BrandDeepPink}}" />
+                        WidthRequest="30">
+                        <Image.Source>
+                            <FontImageSource
+                                Color="{StaticResource BrandDeepPink}"
+                                FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                Glyph="{x:Static icons:FluentIconsRegular.ShieldCheckmark24}"
+                                Size="28" />
+                        </Image.Source>
+                    </Image>
                     <VerticalStackLayout Grid.Column="1" Spacing="5">
                         <Label Style="{StaticResource CardTitleLabel}" Text="Code of Conduct" />
                         <Label
@@ -88,8 +123,15 @@
                         HeightRequest="20"
                         SemanticProperties.Description=""
                         VerticalOptions="Center"
-                        WidthRequest="20"
-                        mi:MauiIcon.Value="{mi:Fluent Icon=ChevronRight24, IconSize=20, IconColor={StaticResource BrandPurple}}" />
+                        WidthRequest="20">
+                        <Image.Source>
+                            <FontImageSource
+                                Color="{StaticResource BrandPurple}"
+                                FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                Glyph="{x:Static icons:FluentIconsRegular.ChevronRight24}"
+                                Size="20" />
+                        </Image.Source>
+                    </Image>
                 </Grid>
             </Border>
 

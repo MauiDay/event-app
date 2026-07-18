@@ -67,8 +67,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show Xcode version
-        run: xcodebuild -version
+      - name: Select Xcode 26.6
+        run: |
+          # The net11 P6 iOS SDK requires Xcode 26.6. It is installed on macos-26
+          # but is not always the selected default, so pick it explicitly.
+          if [ -d /Applications/Xcode_26.6.app ]; then
+            sudo xcode-select -s /Applications/Xcode_26.6.app/Contents/Developer
+          else
+            LATEST=$(ls -d /Applications/Xcode_*.app 2>/dev/null | sort -V | tail -n 1)
+            [ -n "$LATEST" ] && sudo xcode-select -s "$LATEST/Contents/Developer"
+          fi
+          xcodebuild -version
 
       - name: Install pinned .NET SDK
         run: |

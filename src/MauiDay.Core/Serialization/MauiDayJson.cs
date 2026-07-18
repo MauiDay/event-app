@@ -16,7 +16,7 @@ public static class MauiDayJson
             ReadCommentHandling = JsonCommentHandling.Disallow,
         };
 
-        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: false));
         return options;
     }
 }

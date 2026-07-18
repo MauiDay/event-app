@@ -1,4 +1,6 @@
+using System.Text.Json;
 using MauiDay.Core.Configuration;
+using MauiDay.Core.Serialization;
 using MauiDay.Core.Validation;
 
 namespace MauiDay.App.Tests;
@@ -43,5 +45,21 @@ public sealed class ConfigurationContractTests
 
         Assert.Throws<ConfigurationValidationException>(
             () => ConfigurationValidator.Validate(bootstrap));
+    }
+
+    [Fact]
+    public void EnumConfigValuesRejectIntegersAndUnknownStrings()
+    {
+        Assert.Equal(
+            ScheduleStatus.Published,
+            JsonSerializer.Deserialize<ScheduleStatus>("\"published\"", MauiDayJson.Options));
+
+        // Numeric enum values must not silently map to an undefined status.
+        Assert.ThrowsAny<JsonException>(
+            () => JsonSerializer.Deserialize<ScheduleStatus>("1", MauiDayJson.Options));
+
+        // Unknown status strings must fail loudly rather than defaulting.
+        Assert.ThrowsAny<JsonException>(
+            () => JsonSerializer.Deserialize<SessionDisplayStatus>("\"postponed\"", MauiDayJson.Options));
     }
 }

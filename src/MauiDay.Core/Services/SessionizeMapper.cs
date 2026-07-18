@@ -38,9 +38,13 @@ public sealed class SessionizeMapper(IEventTimeService eventTimeService)
                 group => (IReadOnlyList<string>)group.Select(link => link.Id).Distinct().ToArray(),
                 StringComparer.Ordinal);
 
+        var visibleSessionIds = sessions
+            .Select(session => session.Id)
+            .ToHashSet(StringComparer.Ordinal);
+
         var speakers = (payload.Speakers ?? [])
             .Where(speaker => speaker is not null)
-            .Select(speaker => MapSpeaker(speaker, linkedSessionIdsBySpeaker))
+            .Select(speaker => MapSpeaker(speaker, linkedSessionIdsBySpeaker, visibleSessionIds))
             .OrderBy(speaker => speaker.FullName, StringComparer.OrdinalIgnoreCase)
             .ToArray();
 
@@ -87,7 +91,8 @@ public sealed class SessionizeMapper(IEventTimeService eventTimeService)
 
     private static EventSpeaker MapSpeaker(
         SessionizeSpeakerDto speaker,
-        IReadOnlyDictionary<string, IReadOnlyList<string>> linkedSessionIdsBySpeaker)
+        IReadOnlyDictionary<string, IReadOnlyList<string>> linkedSessionIdsBySpeaker,
+        IReadOnlySet<string> visibleSessionIds)
     {
         var id = RequireValue(speaker.Id, "speaker id");
         var firstName = CleanOptional(speaker.FirstName) ?? string.Empty;
@@ -121,7 +126,9 @@ public sealed class SessionizeMapper(IEventTimeService eventTimeService)
 
         linkedSessionIdsBySpeaker.TryGetValue(id, out var linkedSessionIds);
         var sessionIds = (linkedSessionIds ?? [])
-            .Concat((speaker.Sessions ?? []).Select(sessionId => sessionId.ToString()))
+            .Concat((speaker.Sessions ?? [])
+                .Select(sessionId => sessionId.ToString())
+                .Where(visibleSessionIds.Contains))
             .Distinct(StringComparer.Ordinal)
             .ToArray();
 

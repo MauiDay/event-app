@@ -1,8 +1,9 @@
 using System.Text.Json.Serialization;
+using MauiDay.Core.Serialization;
 
 namespace MauiDay.Core.Configuration;
 
-[JsonConverter(typeof(JsonStringEnumConverter<ScheduleStatus>))]
+[JsonConverter(typeof(StrictJsonStringEnumConverter<ScheduleStatus>))]
 public enum ScheduleStatus
 {
     Preview,
@@ -10,14 +11,14 @@ public enum ScheduleStatus
     Archived,
 }
 
-[JsonConverter(typeof(JsonStringEnumConverter<PartnerTier>))]
+[JsonConverter(typeof(StrictJsonStringEnumConverter<PartnerTier>))]
 public enum PartnerTier
 {
     Sponsor,
     Supporter,
 }
 
-[JsonConverter(typeof(JsonStringEnumConverter<SessionDisplayStatus>))]
+[JsonConverter(typeof(StrictJsonStringEnumConverter<SessionDisplayStatus>))]
 public enum SessionDisplayStatus
 {
     Scheduled,

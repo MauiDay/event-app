@@ -2,6 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net11.0-android;net11.0-ios</TargetFrameworks>
+		<!-- Allow CI to build a single platform without the override propagating
+		     to referenced projects (as a global TargetFrameworks property would). -->
+		<TargetFrameworks Condition="'$(CIBuildTfm)' != ''">$(CIBuildTfm)</TargetFrameworks>
 
 		<OutputType>Exe</OutputType>
 		<RootNamespace>MauiDay.App</RootNamespace>
@@ -36,7 +39,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#0B1D51" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg"
+		          ForegroundFile="Resources\AppIcon\appiconfg.svg"
+		          ForegroundScale="0.64"
+		          Color="#0B1D51" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#0B1D51" BaseSize="256,62" />

@@ -155,6 +155,7 @@ public sealed class AppDataService(
             var configurationSource = remoteEvent is null
                 ? baseline.ConfigurationSource
                 : ContentSource.Remote;
+            var configurationRefreshed = remoteEvent is not null;
 
             var remoteConference = await TryLoadRemoteAsync(
                 eventConfiguration.Sessionize.AllDataUrl,
@@ -173,6 +174,7 @@ public sealed class AppDataService(
             var conferenceSource = remoteConference is null
                 ? baseline.ConferenceSource
                 : ContentSource.Remote;
+            var conferenceRefreshed = remoteConference is not null;
 
             // The schedule and the configuration must describe the same event. If we adopted a
             // configuration for a different event but could not load its schedule, publishing the
@@ -185,6 +187,8 @@ public sealed class AppDataService(
                 configurationSource = baseline.ConfigurationSource;
                 conference = baseline.Conference;
                 conferenceSource = baseline.ConferenceSource;
+                configurationRefreshed = false;
+                conferenceRefreshed = false;
             }
 
             SetCurrent(new AppDataSnapshot(
@@ -193,7 +197,10 @@ public sealed class AppDataService(
                 configurationSource,
                 conferenceSource,
                 timeProvider.GetUtcNow(),
-                BuildNotice(configurationSource, conferenceSource)));
+                RefreshNoticeBuilder.Build(
+                    conferenceSource,
+                    configurationRefreshed,
+                    conferenceRefreshed)));
         }
         finally
         {
@@ -462,18 +469,6 @@ public sealed class AppDataService(
     private static bool IsTransient(HttpStatusCode statusCode) =>
         statusCode is HttpStatusCode.RequestTimeout or HttpStatusCode.TooManyRequests ||
         (int)statusCode >= 500;
-
-    private static string BuildNotice(
-        ContentSource configurationSource,
-        ContentSource conferenceSource) =>
-        (configurationSource, conferenceSource) switch
-        {
-            (ContentSource.Remote, ContentSource.Remote) => "Updated just now.",
-            (_, ContentSource.Remote) => "Schedule updated from Sessionize.",
-            (_, ContentSource.Cache) => "Using saved schedule. Pull to retry.",
-            (ContentSource.Cache, _) => "Using saved event details. Pull to retry.",
-            _ => "Using bundled schedule. Pull to retry.",
-        };
 
     private static string GetEventConfigCacheKey(string eventId) =>
         $"event-config-v1-{eventId}";

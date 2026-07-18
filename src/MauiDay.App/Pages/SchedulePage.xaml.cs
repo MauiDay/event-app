@@ -19,9 +19,9 @@ public partial class SchedulePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        _timer.Start();
         await _viewModel.LoadAsync();
         _viewModel.UpdateTimeSensitiveState();
-        _timer.Start();
     }
 
     protected override void OnDisappearing()

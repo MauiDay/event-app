@@ -87,7 +87,6 @@ public sealed partial class SpeakerDetailViewModel(
                 session!,
                 timeProvider.GetUtcNow()))
             .ToArray();
-        StatusMessage = snapshot.Notice;
         OnPropertyChanged(nameof(HasProfilePicture));
         OnPropertyChanged(nameof(HasTagLine));
         OnPropertyChanged(nameof(HasLinks));

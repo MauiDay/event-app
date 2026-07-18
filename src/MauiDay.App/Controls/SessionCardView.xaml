@@ -39,11 +39,12 @@
             ColumnDefinitions="58,*,Auto"
             ColumnSpacing="14"
             RowDefinitions="Auto">
-            <VerticalStackLayout Grid.Column="0" Spacing="2">
+            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Start">
                 <Label
                     FontFamily="PoppinsSemiBold"
                     FontAutoScalingEnabled="False"
                     FontSize="16"
+                    LineHeight="1.15"
                     Text="{Binding Session.TimeText, Source={x:Reference Root}}"
                     TextColor="#C93CAD" />
                 <Label
@@ -52,8 +53,10 @@
                     Text="{Binding Session.DurationText, Source={x:Reference Root}}" />
             </VerticalStackLayout>
 
-            <VerticalStackLayout Grid.Column="1" Spacing="7">
-                <HorizontalStackLayout Spacing="8">
+            <VerticalStackLayout Grid.Column="1" Spacing="7" VerticalOptions="Start">
+                <HorizontalStackLayout
+                    IsVisible="{Binding Session.HasBadges, Source={x:Reference Root}}"
+                    Spacing="8">
                     <Border
                         Padding="8,3"
                         BackgroundColor="#E666CC"
@@ -97,9 +100,35 @@
                 <Label
                     Style="{DynamicResource CardTitleLabel}"
                     Text="{Binding Session.Title, Source={x:Reference Root}}" />
-                <Label
-                    Style="{DynamicResource SecondaryLabel}"
-                    Text="{Binding Session.SpeakerText, Source={x:Reference Root}}" />
+                <HorizontalStackLayout Spacing="8">
+                    <Border
+                        HeightRequest="26"
+                        IsVisible="{Binding Session.ShowSpeakerAvatar, Source={x:Reference Root}}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 13"
+                        VerticalOptions="Center"
+                        WidthRequest="26">
+                        <Grid BackgroundColor="#D9EEFF">
+                            <Label
+                                FontFamily="PoppinsSemiBold"
+                                FontAutoScalingEnabled="False"
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                Text="{Binding Session.SpeakerInitials, Source={x:Reference Root}}"
+                                TextColor="#0B1D51"
+                                VerticalOptions="Center" />
+                            <Image
+                                Aspect="AspectFill"
+                                IsVisible="{Binding Session.HasSpeakerImage, Source={x:Reference Root}}"
+                                SemanticProperties.Description=""
+                                Source="{Binding Session.SpeakerImage, Source={x:Reference Root}}" />
+                        </Grid>
+                    </Border>
+                    <Label
+                        Style="{DynamicResource SecondaryLabel}"
+                        Text="{Binding Session.SpeakerText, Source={x:Reference Root}}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
                 <Label
                     IsVisible="{Binding Session.HasRoom, Source={x:Reference Root}}"
                     Style="{DynamicResource CaptionLabel}"

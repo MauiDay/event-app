@@ -4,7 +4,6 @@
     x:Name="Root"
     x:DataType="vm:PartnersViewModel"
     AutomationId="PartnersPage"
-    Shell.TabBarIsVisible="False"
     Title="Partners"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"

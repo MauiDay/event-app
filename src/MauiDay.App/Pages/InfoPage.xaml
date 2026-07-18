@@ -3,7 +3,7 @@
     x:Class="MauiDay.App.Pages.InfoPage"
     x:DataType="vm:InfoViewModel"
     AutomationId="InfoPage"
-    Shell.NavBarIsVisible="False"
+    Title="Info"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons"
@@ -12,7 +12,6 @@
     <ScrollView>
         <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="20">
             <VerticalStackLayout Spacing="5">
-                <Label Style="{StaticResource PageTitleLabel}" Text="Info" />
                 <Label Style="{StaticResource SecondaryLabel}" Text="{Binding EventName}" />
             </VerticalStackLayout>
 

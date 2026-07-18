@@ -25,12 +25,6 @@ public sealed partial class TodayViewModel : DataViewModel
     private string _dateText = "23 October 2026";
 
     [ObservableProperty]
-    private string _heroTitle = "A day for .NET MAUI.";
-
-    [ObservableProperty]
-    private string _heroSubtitle = "A focused day for the people building the future of .NET MAUI.";
-
-    [ObservableProperty]
     private string _phaseLabel = "NEXT UP";
 
     [ObservableProperty]
@@ -54,14 +48,14 @@ public sealed partial class TodayViewModel : DataViewModel
     [ObservableProperty]
     private string _locationText = "Holzmarkt 2, 50676 Köln";
 
-    [ObservableProperty]
-    private bool _isPreview = true;
-
     public bool HasCurrentSession => CurrentSession is not null;
 
     public bool HasNextSession => NextSession is not null;
 
     public bool HasCountdown => !string.IsNullOrEmpty(CountdownText);
+
+    public string EditionAccessibility =>
+        $"{EditionLabel}, {DateText}. Opens edition details and badge pickup.";
 
     public TodayViewModel(
         IAppDataService dataService,
@@ -98,8 +92,6 @@ public sealed partial class TodayViewModel : DataViewModel
         VenueName = snapshot.Event.Venue.Name;
         LocationText =
             $"{snapshot.Event.Venue.AddressLine1}, {snapshot.Event.Venue.PostalCode} {snapshot.Event.Venue.City}";
-        IsPreview = snapshot.Event.ScheduleStatus == ScheduleStatus.Preview;
-        StatusMessage = snapshot.Notice;
         CurrentSession = state.CurrentSession is null
             ? null
             : SessionCardModel.Create(snapshot, state.CurrentSession, _timeProvider.GetUtcNow());
@@ -145,7 +137,11 @@ public sealed partial class TodayViewModel : DataViewModel
         OnPropertyChanged(nameof(HasCurrentSession));
         OnPropertyChanged(nameof(HasNextSession));
         OnPropertyChanged(nameof(HasCountdown));
+        OnPropertyChanged(nameof(EditionAccessibility));
     }
+
+    [RelayCommand]
+    private Task OpenEditionAsync() => _navigator.OpenEditionAsync();
 
     [RelayCommand]
     private Task OpenScheduleAsync() => _navigator.GoToScheduleAsync();

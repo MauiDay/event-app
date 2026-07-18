@@ -19,7 +19,7 @@ public static class RefreshNoticeBuilder
         if (conferenceRefreshed)
         {
             return configurationRefreshed
-                ? "Updated just now."
+                ? "App information updated just now."
                 : "Schedule updated from Sessionize.";
         }
 

@@ -18,9 +18,6 @@ public sealed partial class ScheduleViewModel : DataViewModel
     private IReadOnlyList<SessionCardModel> _sessions = [];
 
     [ObservableProperty]
-    private bool _isPreview;
-
-    [ObservableProperty]
     private string _dateText = string.Empty;
 
     [ObservableProperty]
@@ -58,13 +55,11 @@ public sealed partial class ScheduleViewModel : DataViewModel
                 session,
                 _timeProvider.GetUtcNow()))
             .ToArray();
-        IsPreview = snapshot.Event.ScheduleStatus == ScheduleStatus.Preview;
         DateText = snapshot.Event.Date.ToString("dddd, d MMMM yyyy");
         TimeZoneLabel = _eventTimeService.DescribeTimeZone(
             snapshot.Event.TimeZone,
             snapshot.Event.Date,
             snapshot.Event.City);
-        StatusMessage = snapshot.Notice;
         OnPropertyChanged(nameof(HasSessions));
     }
 

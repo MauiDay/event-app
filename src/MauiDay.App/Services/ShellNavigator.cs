@@ -34,6 +34,8 @@ public sealed class ShellNavigator : IAppNavigator
 
     public Task OpenVenueAsync() => Shell.Current.GoToAsync(nameof(VenuePage));
 
+    public Task OpenEditionAsync() => Shell.Current.GoToAsync(nameof(EditionPage));
+
     public Task OpenPartnersAsync() => Shell.Current.GoToAsync(nameof(PartnersPage));
 
     public Task OpenCodeOfConductAsync() =>

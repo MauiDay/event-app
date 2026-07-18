@@ -35,7 +35,6 @@ public sealed partial class PartnersViewModel(
             .Where(partner => partner.Tier == PartnerTier.Supporter)
             .Select(PartnerCardModel.Create)
             .ToArray();
-        StatusMessage = snapshot.Notice;
         OnPropertyChanged(nameof(HasSponsors));
         OnPropertyChanged(nameof(HasSupporters));
     }

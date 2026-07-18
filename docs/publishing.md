@@ -71,7 +71,7 @@ Variables are **not** secret — they're identifiers safe to display in logs.
 3. Optionally set:
    - **display_version** — overrides `ApplicationDisplayVersion` (marketing version).
    - **build_number** — overrides `ApplicationVersion` (build number / versionCode). If left empty, the workflow run number is used.
-   - **play_track** (Android only) — `internal` (default), `alpha`, `beta`, or `production`.
+   - **play_track** (Android only) — `internal`, `alpha`, `beta` (default), or `production`.
 
 ### From a release / tag
 
@@ -88,10 +88,11 @@ Variables are **not** secret — they're identifiers safe to display in logs.
   immediately; promoting it to a public App Store release is still a manual step in App
   Store Connect (submit for review). This is the safer default — change it if you want
   automated store submission.
-- **Android default track: `internal`.** The Android workflow defaults to the
-  `internal` testing track. Override per-run via the `play_track` input. The **first**
-  upload of a brand-new app usually has to be done manually in the Play Console before
-  the API will accept automated uploads.
+- **Android default track: `beta`.** The Android workflow defaults to the `beta`
+  (Open testing) track, so builds go to external testers with the opt-in link.
+  Override per-run via the `play_track` input. The **first** upload of a brand-new
+  app usually has to be done manually in the Play Console before the API will accept
+  automated uploads.
 - **Provisioning profile.** The iOS build uses the profile's *name* for
   `-p:CodesignProvision`. Make sure the profile you encode matches the
   `net.mauiday.companion` bundle id and your distribution certificate.

@@ -18,7 +18,7 @@ on:
       play_track:
         description: "Google Play track to release to."
         required: false
-        default: "internal"
+        default: "beta"
         type: choice
         options:
           - internal
@@ -154,5 +154,5 @@ jobs:
           serviceAccountJson: ${{ env.PLAY_SA_JSON_PATH }}
           packageName: ${{ vars.ANDROID_PACKAGE_NAME }}
           releaseFiles: ${{ steps.findaab.outputs.aab_path }}
-          track: ${{ inputs.play_track || 'internal' }}
+          track: ${{ inputs.play_track || 'beta' }}
           status: completed

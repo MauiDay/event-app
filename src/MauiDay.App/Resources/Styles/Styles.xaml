@@ -10,8 +10,8 @@
     </OnPlatform>
 
     <OnPlatform x:Key="DetailPagePadding" x:TypeArguments="Thickness">
-        <On Platform="iOS" Value="20,12,20,36" />
-        <On Platform="Android" Value="20,16,20,36" />
+        <On Platform="iOS" Value="20,12,20,104" />
+        <On Platform="Android" Value="20,16,20,96" />
     </OnPlatform>
 
     <Style TargetType="ContentPage">

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.EditionPage"
+    x:DataType="vm:EditionViewModel"
+    AutomationId="EditionPage"
+    Title="This edition"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{StaticResource DetailPagePadding}" Spacing="20">
+            <Border
+                AutomationId="EditionHero"
+                Padding="22"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 24">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="1,1">
+                        <GradientStop Color="{StaticResource BrandNavy}" Offset="0" />
+                        <GradientStop Color="#263A77" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <VerticalStackLayout Spacing="14">
+                    <Image
+                        Aspect="AspectFit"
+                        HeightRequest="132"
+                        HorizontalOptions="Center"
+                        SemanticProperties.Description="Edition badge"
+                        Source="cologne26.png" />
+                    <VerticalStackLayout Spacing="6">
+                        <Label
+                            FontFamily="PoppinsSemiBold"
+                            FontSize="11"
+                            CharacterSpacing="1.4"
+                            HorizontalTextAlignment="Center"
+                            Text="THIS EDITION"
+                            TextColor="{StaticResource BrandBlue}" />
+                        <Label
+                            FontFamily="PoppinsSemiBold"
+                            FontAutoScalingEnabled="False"
+                            FontSize="28"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding EditionLabel}"
+                            TextColor="{StaticResource White}" />
+                        <Label
+                            FontSize="15"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding EventName}"
+                            TextColor="#DDE7FF" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border AutomationId="EditionBadgePickup" Style="{StaticResource CardBorder}">
+                <Grid ColumnDefinitions="44,*" ColumnSpacing="14">
+                    <Image
+                        HeightRequest="30"
+                        SemanticProperties.Description=""
+                        VerticalOptions="Start"
+                        WidthRequest="30">
+                        <Image.Source>
+                            <FontImageSource
+                                Color="{StaticResource BrandDeepPink}"
+                                FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                Glyph="{x:Static icons:FluentIconsRegular.TicketDiagonal24}"
+                                Size="28" />
+                        </Image.Source>
+                    </Image>
+                    <VerticalStackLayout Grid.Column="1" Spacing="6">
+                        <Label Style="{StaticResource CardTitleLabel}" Text="Collect your badge" />
+                        <Label
+                            Style="{StaticResource BodyLabel}"
+                            Text="Don't forget to pick up your physical badge and lanyard at the registration desk when you arrive. Bring your ticket (printed or on your phone) so the team can check you in quickly." />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Border AutomationId="EditionWhen" Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="5">
+                    <Label Style="{StaticResource EyebrowLabel}" Text="WHEN" />
+                    <Label Style="{StaticResource CardTitleLabel}" Text="{Binding DateText}" />
+                    <Label Style="{StaticResource SecondaryLabel}" Text="{Binding LocationText}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border AutomationId="EditionWhere" Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="5">
+                    <Label Style="{StaticResource EyebrowLabel}" Text="WHERE" />
+                    <Label Style="{StaticResource CardTitleLabel}" Text="{Binding VenueName}" />
+                    <Label Style="{StaticResource SecondaryLabel}" Text="{Binding VenueAddress}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <VerticalStackLayout Spacing="12">
+                <Button
+                    AutomationId="EditionTicketsButton"
+                    Command="{Binding OpenTicketsCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="Get tickets" />
+                <Button
+                    AutomationId="EditionDirectionsButton"
+                    Command="{Binding OpenDirectionsCommand}"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="Open directions" />
+            </VerticalStackLayout>
+
+            <Label
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding HasStatusMessage}"
+                Style="{StaticResource CaptionLabel}"
+                Text="{Binding StatusMessage}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

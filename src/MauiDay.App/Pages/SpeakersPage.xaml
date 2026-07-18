@@ -4,7 +4,7 @@
     x:Name="Root"
     x:DataType="vm:SpeakersViewModel"
     AutomationId="SpeakersPage"
-    Shell.NavBarIsVisible="False"
+    Title="Speakers"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:MauiDay.App.Controls"
@@ -18,7 +18,6 @@
         <ScrollView>
             <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="20">
                 <VerticalStackLayout Spacing="5">
-                    <Label Style="{StaticResource PageTitleLabel}" Text="Speakers" />
                     <Label
                         Style="{StaticResource SecondaryLabel}"
                         Text="Meet the people sharing what is next for .NET MAUI." />

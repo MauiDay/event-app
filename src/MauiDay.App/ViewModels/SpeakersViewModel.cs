@@ -28,7 +28,6 @@ public sealed partial class SpeakersViewModel : DataViewModel
         Speakers = snapshot.Conference.Speakers
             .Select(SpeakerCardModel.Create)
             .ToArray();
-        StatusMessage = snapshot.Notice;
         OnPropertyChanged(nameof(HasSpeakers));
     }
 

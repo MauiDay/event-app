@@ -13,7 +13,7 @@ public sealed class RefreshNoticeBuilderTests
             configurationRefreshed: true,
             conferenceRefreshed: true);
 
-        Assert.Equal("Updated just now.", notice);
+        Assert.Equal("App information updated just now.", notice);
     }
 
     [Fact]
@@ -74,6 +74,6 @@ public sealed class RefreshNoticeBuilderTests
             configurationRefreshed: true,
             conferenceRefreshed: false);
 
-        Assert.NotEqual("Updated just now.", withoutFetch);
+        Assert.NotEqual("App information updated just now.", withoutFetch);
     }
 }

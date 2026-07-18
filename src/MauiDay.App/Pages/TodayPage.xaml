@@ -7,6 +7,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:MauiDay.App.Controls"
+    xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons"
     xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
 
     <RefreshView
@@ -21,16 +22,13 @@
                         HorizontalOptions="Start"
                         SemanticProperties.Description="MAUI Day"
                         Source="{AppThemeBinding Light=mauiday_logo_dark.svg, Dark=mauiday_logo_light.svg}" />
-                    <Label
-                        Grid.Column="1"
-                        Style="{StaticResource EyebrowLabel}"
-                        Text="{Binding EditionLabel}"
-                        VerticalOptions="Center" />
                 </Grid>
 
                 <Border
                     AutomationId="TodayHero"
-                    Padding="22"
+                    Padding="20"
+                    SemanticProperties.Description="{Binding EditionAccessibility}"
+                    SemanticProperties.Hint="Opens edition details and badge pickup"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 24">
                     <Border.Background>
@@ -39,31 +37,60 @@
                             <GradientStop Color="#263A77" Offset="1" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Grid ColumnDefinitions="*,96" ColumnSpacing="12">
-                        <VerticalStackLayout Spacing="12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenEditionCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="112,*" ColumnSpacing="18">
+                        <Image
+                            Aspect="AspectFit"
+                            HeightRequest="112"
+                            HorizontalOptions="Center"
+                            SemanticProperties.Description=""
+                            Source="cologne26.png"
+                            VerticalOptions="Center"
+                            WidthRequest="112" />
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="7"
+                            VerticalOptions="Center">
                             <Label
                                 FontFamily="PoppinsSemiBold"
-                                FontSize="12"
-                                CharacterSpacing="1.1"
-                                Text="{Binding DateText}"
+                                FontSize="11"
+                                CharacterSpacing="1.4"
+                                Text="THIS EDITION"
                                 TextColor="{StaticResource BrandBlue}" />
                             <Label
-                                Style="{StaticResource DisplayLabel}"
-                                Text="{Binding HeroTitle}"
+                                FontFamily="PoppinsSemiBold"
+                                FontAutoScalingEnabled="False"
+                                FontSize="26"
+                                LineHeight="1.05"
+                                Text="{Binding EditionLabel}"
                                 TextColor="{StaticResource White}" />
                             <Label
-                                FontSize="15"
-                                LineHeight="1.35"
-                                Text="{Binding HeroSubtitle}"
+                                FontSize="14"
+                                Text="{Binding DateText}"
                                 TextColor="#DDE7FF" />
+                            <HorizontalStackLayout Spacing="6">
+                                <Label
+                                    FontFamily="PoppinsSemiBold"
+                                    FontSize="12"
+                                    Text="Details &amp; badge pickup"
+                                    TextColor="{StaticResource BrandPink}"
+                                    VerticalOptions="Center" />
+                                <Image
+                                    HeightRequest="14"
+                                    VerticalOptions="Center"
+                                    WidthRequest="14">
+                                    <Image.Source>
+                                        <FontImageSource
+                                            Color="{StaticResource BrandPink}"
+                                            FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                            Glyph="{x:Static icons:FluentIconsRegular.ChevronRight24}"
+                                            Size="14" />
+                                    </Image.Source>
+                                </Image>
+                            </HorizontalStackLayout>
                         </VerticalStackLayout>
-                        <Image
-                            Grid.Column="1"
-                            Aspect="AspectFit"
-                            HorizontalOptions="End"
-                            SemanticProperties.Description="Cologne 2026 edition"
-                            Source="cologne26.png"
-                            VerticalOptions="End" />
                     </Grid>
                 </Border>
 
@@ -79,15 +106,6 @@
                             Text="{Binding CountdownText}"
                             TextColor="{StaticResource BrandDeepPink}" />
                     </VerticalStackLayout>
-                </Border>
-
-                <Border
-                    AutomationId="SchedulePreviewNotice"
-                    IsVisible="{Binding IsPreview}"
-                    Style="{StaticResource SubtleBorder}">
-                    <Label
-                        Style="{StaticResource SecondaryLabel}"
-                        Text="Schedule preview — more sessions and program moments may still be added." />
                 </Border>
 
                 <VerticalStackLayout IsVisible="{Binding HasCurrentSession}" Spacing="12">

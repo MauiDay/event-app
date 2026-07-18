@@ -102,7 +102,6 @@ public sealed partial class SessionDetailViewModel(
             .Where(speaker => speaker is not null)
             .Select(speaker => SpeakerCardModel.Create(speaker!))
             .ToArray();
-        StatusMessage = snapshot.Notice;
         OnPropertyChanged(nameof(ShowRoom));
         OnPropertyChanged(nameof(HasSessionStatus));
         OnPropertyChanged(nameof(HasSpeakers));

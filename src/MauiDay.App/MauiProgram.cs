@@ -50,6 +50,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<SessionDetailViewModel>();
 		builder.Services.AddTransient<SpeakerDetailViewModel>();
 		builder.Services.AddTransient<VenueViewModel>();
+		builder.Services.AddTransient<EditionViewModel>();
 		builder.Services.AddTransient<PartnersViewModel>();
 		builder.Services.AddTransient<CodeOfConductViewModel>();
 		builder.Services.AddTransient<AboutViewModel>();
@@ -61,6 +62,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<SessionDetailPage>();
 		builder.Services.AddTransient<SpeakerDetailPage>();
 		builder.Services.AddTransient<VenuePage>();
+		builder.Services.AddTransient<EditionPage>();
 		builder.Services.AddTransient<PartnersPage>();
 		builder.Services.AddTransient<CodeOfConductPage>();
 		builder.Services.AddTransient<AboutPage>();

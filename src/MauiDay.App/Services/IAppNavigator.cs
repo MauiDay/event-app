@@ -14,6 +14,8 @@ public interface IAppNavigator
 
     Task OpenVenueAsync();
 
+    Task OpenEditionAsync();
+
     Task OpenPartnersAsync();
 
     Task OpenCodeOfConductAsync();

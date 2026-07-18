@@ -52,7 +52,6 @@ public sealed partial class VenueViewModel(
         Transit = _venue.Transit;
         Parking = _venue.Parking;
         ArrivalNotes = _venue.ArrivalNotes;
-        StatusMessage = snapshot.Notice;
         OnPropertyChanged(nameof(HasCapacity));
         OnPropertyChanged(nameof(HasTransit));
         OnPropertyChanged(nameof(HasParking));

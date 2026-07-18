@@ -15,25 +15,36 @@ public sealed record SessionCardModel(
     bool IsServiceSession,
     bool IsLive,
     bool IsNavigable,
+    Uri? SpeakerImage,
+    string SpeakerInitials,
+    bool ShowSpeakerAvatar,
     string AccessibilityDescription)
 {
     public bool HasRoom => !string.IsNullOrWhiteSpace(RoomText);
 
     public bool HasStatus => !string.IsNullOrWhiteSpace(StatusText);
 
+    public bool HasBadges => IsLive || IsServiceSession || HasStatus;
+
+    public bool HasSpeakerImage => ShowSpeakerAvatar && SpeakerImage is not null;
+
     public static SessionCardModel Create(
         AppDataSnapshot snapshot,
         EventSession session,
         DateTimeOffset now)
     {
-        var speakers = session.SpeakerIds
+        var speakerEntities = session.SpeakerIds
             .Select(snapshot.Conference.FindSpeaker)
             .Where(speaker => speaker is not null)
-            .Select(speaker => speaker!.FullName)
+            .Select(speaker => speaker!)
+            .ToArray();
+        var speakers = speakerEntities
+            .Select(speaker => speaker.FullName)
             .ToArray();
         var speakerText = speakers.Length == 0
             ? session.IsServiceSession ? "MAUI Day" : "Speaker to be announced"
             : string.Join(", ", speakers);
+        var leadSpeaker = speakerEntities.FirstOrDefault();
         var eventNow = TimeZoneInfo.ConvertTime(
             now,
             TimeZoneInfo.FindSystemTimeZoneById(snapshot.Event.TimeZone));
@@ -64,6 +75,9 @@ public sealed record SessionCardModel(
             session.IsServiceSession,
             isLive,
             !session.IsServiceSession || !string.IsNullOrWhiteSpace(session.Description),
+            leadSpeaker?.ProfilePicture,
+            leadSpeaker?.Initials ?? string.Empty,
+            leadSpeaker is not null,
             accessibilityDescription);
     }
 }

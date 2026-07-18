@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    x:Class="MauiDay.App.AppShell"
+    Title="MAUI Day"
+    FlyoutBehavior="Disabled"
+    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+    ForegroundColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+    TitleColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+    Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+    Shell.TabBarForegroundColor="{AppThemeBinding Light={StaticResource BrandNavy}, Dark={StaticResource BrandBlue}}"
+    Shell.TabBarTitleColor="{AppThemeBinding Light={StaticResource BrandNavy}, Dark={StaticResource BrandBlue}}"
+    Shell.TabBarUnselectedColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons">
+
+    <TabBar>
+        <Tab Title="Today">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                    Glyph="{x:Static icons:FluentIconsRegular.Home24}" />
+            </Tab.Icon>
+            <ShellContent
+                x:Name="TodayContent"
+                Route="today"
+                Title="Today" />
+        </Tab>
+        <Tab Title="Schedule">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                    Glyph="{x:Static icons:FluentIconsRegular.Calendar24}" />
+            </Tab.Icon>
+            <ShellContent
+                x:Name="ScheduleContent"
+                Route="schedule"
+                Title="Schedule" />
+        </Tab>
+        <Tab Title="Speakers">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                    Glyph="{x:Static icons:FluentIconsRegular.PeopleCommunity24}" />
+            </Tab.Icon>
+            <ShellContent
+                x:Name="SpeakersContent"
+                Route="speakers"
+                Title="Speakers" />
+        </Tab>
+        <Tab Title="Info">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                    Glyph="{x:Static icons:FluentIconsRegular.Info24}" />
+            </Tab.Icon>
+            <ShellContent
+                x:Name="InfoContent"
+                Route="info"
+                Title="Info" />
+        </Tab>
+    </TabBar>
+</Shell>

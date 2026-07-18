@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.SpeakerDetailPage"
+    x:Name="Root"
+    x:DataType="vm:SpeakerDetailViewModel"
+    AutomationId="SpeakerDetailPage"
+    Shell.TabBarIsVisible="False"
+    Title="Speaker"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiDay.App.Controls"
+    xmlns:models="clr-namespace:MauiDay.App.ViewModels"
+    xmlns:schedule="clr-namespace:MauiDay.Core.Models;assembly=MauiDay.Core"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{StaticResource DetailPagePadding}" Spacing="22">
+            <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                <Border
+                    HeightRequest="120"
+                    HorizontalOptions="Start"
+                    Stroke="{StaticResource BrandPurple}"
+                    StrokeThickness="3"
+                    StrokeShape="RoundRectangle 36"
+                    WidthRequest="120">
+                    <Grid BackgroundColor="{StaticResource BrandBlue}">
+                        <Label
+                            FontFamily="PoppinsSemiBold"
+                            FontSize="34"
+                            HorizontalOptions="Center"
+                            Text="{Binding Initials}"
+                            TextColor="{StaticResource BrandNavy}"
+                            VerticalOptions="Center" />
+                        <Image
+                            Aspect="AspectFill"
+                            IsVisible="{=HasProfilePicture}"
+                            SemanticProperties.Description=""
+                            Source="{Binding ProfilePicture}" />
+                    </Grid>
+                </Border>
+                <Label
+                    Grid.Row="1"
+                    Style="{StaticResource PageTitleLabel}"
+                    Text="{Binding FullName}" />
+                <Label
+                    Grid.Row="2"
+                    IsVisible="{Binding HasTagLine}"
+                    Style="{StaticResource SecondaryLabel}"
+                    Text="{Binding TagLine}" />
+            </Grid>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Style="{StaticResource SectionTitleLabel}" Text="About" />
+                <Label
+                    AutomationId="SpeakerBio"
+                    Style="{StaticResource BodyLabel}"
+                    Text="{Binding Bio}" />
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout
+                BindableLayout.ItemsSource="{Binding Links}"
+                IsVisible="{Binding HasLinks}"
+                Spacing="10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="schedule:SpeakerLink">
+                        <Button
+                            Command="{Binding BindingContext.OpenLinkCommand, Source={x:Reference Root}}"
+                            CommandParameter="{Binding .}"
+                            Style="{StaticResource SecondaryButton}"
+                            Text="{Binding Title}" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </HorizontalStackLayout>
+
+            <VerticalStackLayout IsVisible="{Binding HasSessions}" Spacing="12">
+                <Label Style="{StaticResource SectionTitleLabel}" Text="Sessions" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Sessions}" Spacing="12">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:SessionCardModel">
+                            <controls:SessionCardView
+                                AutomationId="{Binding Id, StringFormat='SpeakerSession_{0}'}"
+                                Command="{Binding BindingContext.OpenSessionCommand, Source={x:Reference Root}}"
+                                Session="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <Border
+                IsVisible="{!HasSessions}"
+                Style="{StaticResource SubtleBorder}">
+                <Label
+                    Style="{StaticResource SecondaryLabel}"
+                    Text="No related sessions are currently published." />
+            </Border>
+
+            <Label
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding HasStatusMessage}"
+                Style="{StaticResource CaptionLabel}"
+                Text="{Binding StatusMessage}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

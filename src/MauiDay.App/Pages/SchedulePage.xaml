@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.SchedulePage"
+    x:Name="Root"
+    x:DataType="vm:ScheduleViewModel"
+    AutomationId="SchedulePage"
+    Shell.NavBarIsVisible="False"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiDay.App.Controls"
+    xmlns:models="clr-namespace:MauiDay.App.ViewModels"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <RefreshView
+        AutomationId="ScheduleRefresh"
+        Command="{Binding RefreshCommand}"
+        IsRefreshing="{Binding IsBusy}">
+        <ScrollView>
+            <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="20">
+                <VerticalStackLayout Spacing="5">
+                    <Label Style="{StaticResource PageTitleLabel}" Text="Schedule" />
+                    <Label Style="{StaticResource SecondaryLabel}" Text="{Binding DateText}" />
+                    <Label
+                        AutomationId="ScheduleTimeZoneLabel"
+                        Style="{StaticResource CaptionLabel}"
+                        Text="{Binding TimeZoneLabel}" />
+                </VerticalStackLayout>
+
+                <Border IsVisible="{Binding IsPreview}" Style="{StaticResource SubtleBorder}">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Style="{StaticResource CardTitleLabel}" Text="Program preview" />
+                        <Label
+                            Style="{StaticResource SecondaryLabel}"
+                            Text="These are the published sessions so far. Additional program moments may still be added." />
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout
+                    BindableLayout.ItemsSource="{Binding Sessions}"
+                    IsVisible="{Binding HasSessions}"
+                    Spacing="12">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:SessionCardModel">
+                            <controls:SessionCardView
+                                AutomationId="{Binding Id, StringFormat='ScheduleSession_{0}'}"
+                                Command="{Binding BindingContext.OpenSessionCommand, Source={x:Reference Root}}"
+                                Session="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Border
+                    AutomationId="ScheduleEmptyState"
+                    IsVisible="{!HasSessions}"
+                    Style="{StaticResource CardBorder}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Style="{StaticResource SectionTitleLabel}" Text="The program is on its way" />
+                        <Label
+                            Style="{StaticResource SecondaryLabel}"
+                            Text="No sessions have been published yet. Pull to check again." />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding HasStatusMessage}"
+                    Style="{StaticResource CaptionLabel}"
+                    Text="{Binding StatusMessage}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

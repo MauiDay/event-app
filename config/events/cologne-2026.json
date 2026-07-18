@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "id": "cologne-2026",
+  "name": "MAUI Day Cologne",
+  "editionLabel": "Cologne 2026",
+  "city": "Cologne",
+  "country": "Germany",
+  "date": "2026-10-23",
+  "timeZone": "Europe/Berlin",
+  "scheduleStatus": "preview",
+  "sessionize": {
+    "eventId": "o0aj9rpg",
+    "allDataUrl": "https://sessionize.com/api/v2/o0aj9rpg/view/All",
+    "bundledDataAsset": "config/data/cologne-2026-sessionize-all.json"
+  },
+  "venue": {
+    "name": "Microsoft Cologne Office",
+    "addressLine1": "Holzmarkt 2",
+    "postalCode": "50676",
+    "city": "Köln",
+    "country": "Germany",
+    "capacity": 160,
+    "arrivalNotes": "",
+    "transit": "Train station 15 min walk",
+    "parking": "Public parking nearby",
+    "mapsUrl": "https://maps.app.goo.gl/svuLsiq8zKZaVxY19"
+  },
+  "links": {
+    "website": "https://mauiday.net/cologne",
+    "tickets": "https://www.eventbrite.nl/e/net-maui-day-cologne-2026-tickets-1990687626278",
+    "codeOfConduct": "https://mauiday.net/code-of-conduct",
+    "privacy": "https://mauiday.net/privacy"
+  },
+  "organizers": [
+    {
+      "name": "Gerald Versluis",
+      "email": "gerald@verslu.is"
+    },
+    {
+      "name": "Shaun Lawrence",
+      "email": "shaun@mauiday.net"
+    }
+  ],
+  "socialLinks": [
+    {
+      "title": "YouTube",
+      "url": "https://www.youtube.com/@mauiday"
+    },
+    {
+      "title": "LinkedIn",
+      "url": "https://www.linkedin.com/company/maui-day"
+    },
+    {
+      "title": "Bluesky",
+      "url": "https://bsky.app/profile/mauiday.net"
+    }
+  ],
+  "partners": [
+    {
+      "name": "Telerik",
+      "tier": "sponsor",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/progress.png",
+      "websiteUrl": "https://www.telerik.com/maui-ui"
+    },
+    {
+      "name": "Microsoft",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/microsoft.png",
+      "websiteUrl": "https://www.microsoft.com"
+    },
+    {
+      "name": "Sessionize",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/sessionize.png",
+      "websiteUrl": "https://sessionize.com/"
+    },
+    {
+      "name": "Grial UI Kit",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/grial.png",
+      "websiteUrl": "https://grialkit.com/"
+    },
+    {
+      "name": "UXDivers",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/ux-divers.png",
+      "websiteUrl": "https://uxdivers.com/"
+    }
+  ],
+  "brand": {
+    "editionBadgeUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/editions/cologne26.png",
+    "bundledEditionBadge": "cologne26.png",
+    "primaryColor": "#0B1D51",
+    "accentColor": "#9780E5"
+  },
+  "sessionOverrides": {}
+}

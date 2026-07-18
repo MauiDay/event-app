@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="MauiDay.App.Controls.SpeakerCardView"
+    x:Name="Root"
+    x:DataType="controls:SpeakerCardView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiDay.App.Controls"
+    xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons">
+
+    <Border
+        AutomationId="{Binding AutomationId, Source={x:Reference Root}}"
+        SemanticProperties.Description="{Binding Speaker.AccessibilityDescription, Source={x:Reference Root}}"
+        SemanticProperties.Hint="Opens speaker profile"
+        Style="{DynamicResource CardBorder}">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer
+                Command="{Binding Command, Source={x:Reference Root}}"
+                CommandParameter="{Binding Speaker, Source={x:Reference Root}}" />
+        </Border.GestureRecognizers>
+        <Grid ColumnDefinitions="68,*,Auto" ColumnSpacing="16">
+            <Border
+                Grid.Column="0"
+                HeightRequest="64"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 20"
+                WidthRequest="64">
+                <Grid BackgroundColor="#D9EEFF">
+                    <Label
+                        FontFamily="PoppinsSemiBold"
+                        FontAutoScalingEnabled="False"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="{Binding Speaker.Initials, Source={x:Reference Root}}"
+                        TextColor="#0B1D51"
+                        VerticalOptions="Center" />
+                    <Image
+                        Aspect="AspectFill"
+                        IsVisible="{Binding Speaker.HasProfilePicture, Source={x:Reference Root}}"
+                        SemanticProperties.Description=""
+                        Source="{Binding Speaker.ProfilePicture, Source={x:Reference Root}}" />
+                </Grid>
+            </Border>
+
+            <VerticalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                <Label
+                    Style="{DynamicResource CardTitleLabel}"
+                    Text="{Binding Speaker.FullName, Source={x:Reference Root}}" />
+                <Label
+                    Style="{DynamicResource SecondaryLabel}"
+                    Text="{Binding Speaker.TagLine, Source={x:Reference Root}}" />
+            </VerticalStackLayout>
+
+            <Image
+                Grid.Column="2"
+                HeightRequest="20"
+                HorizontalOptions="End"
+                SemanticProperties.Description=""
+                VerticalOptions="Center"
+                WidthRequest="20">
+                <Image.Source>
+                    <FontImageSource
+                        Color="{AppThemeBinding Light=#52607E, Dark=#BBC6E2}"
+                        FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                        Glyph="{x:Static icons:FluentIconsRegular.ChevronRight24}"
+                        Size="20" />
+                </Image.Source>
+            </Image>
+        </Grid>
+    </Border>
+</ContentView>

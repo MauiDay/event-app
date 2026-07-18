@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MauiDay.App/MauiDay.App.csproj" />
+    <Project Path="src/MauiDay.Core/MauiDay.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MauiDay.App.Tests/MauiDay.App.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="MauiDay.App.Controls.SessionCardView"
+    x:Name="Root"
+    x:DataType="controls:SessionCardView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiDay.App.Controls"
+    xmlns:icons="clr-namespace:IconFont.Maui.FluentIcons;assembly=IconFont.Maui.FluentIcons">
+
+    <Border
+        AutomationId="{Binding AutomationId, Source={x:Reference Root}}"
+        SemanticProperties.Description="{Binding Session.AccessibilityDescription, Source={x:Reference Root}}"
+        SemanticProperties.Hint="Opens session details"
+        Style="{DynamicResource CardBorder}">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer
+                Command="{Binding Command, Source={x:Reference Root}}"
+                CommandParameter="{Binding Session, Source={x:Reference Root}}" />
+        </Border.GestureRecognizers>
+        <Border.Triggers>
+            <DataTrigger
+                Binding="{Binding Session.IsLive, Source={x:Reference Root}}"
+                TargetType="Border"
+                Value="True">
+                <Setter Property="Stroke" Value="#E666CC" />
+                <Setter Property="StrokeThickness" Value="2" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Session.IsServiceSession, Source={x:Reference Root}}"
+                TargetType="Border"
+                Value="True">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light=#F0F3FA, Dark=#17264C}" />
+            </DataTrigger>
+        </Border.Triggers>
+
+        <Grid
+            ColumnDefinitions="58,*,Auto"
+            ColumnSpacing="14"
+            RowDefinitions="Auto">
+            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                <Label
+                    FontFamily="PoppinsSemiBold"
+                    FontAutoScalingEnabled="False"
+                    FontSize="16"
+                    Text="{Binding Session.TimeText, Source={x:Reference Root}}"
+                    TextColor="#C93CAD" />
+                <Label
+                    FontAutoScalingEnabled="False"
+                    Style="{DynamicResource CaptionLabel}"
+                    Text="{Binding Session.DurationText, Source={x:Reference Root}}" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" Spacing="7">
+                <HorizontalStackLayout Spacing="8">
+                    <Border
+                        Padding="8,3"
+                        BackgroundColor="#E666CC"
+                        IsVisible="{Binding Session.IsLive, Source={x:Reference Root}}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 9">
+                        <Label
+                            FontFamily="PoppinsSemiBold"
+                            FontAutoScalingEnabled="False"
+                            FontSize="10"
+                            Text="LIVE"
+                            TextColor="#0B1D51" />
+                    </Border>
+                    <Border
+                        Padding="8,3"
+                        BackgroundColor="#D9EEFF"
+                        IsVisible="{Binding Session.IsServiceSession, Source={x:Reference Root}}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 9">
+                        <Label
+                            FontFamily="PoppinsSemiBold"
+                            FontAutoScalingEnabled="False"
+                            FontSize="10"
+                            Text="PROGRAM"
+                            TextColor="#0B1D51" />
+                    </Border>
+                    <Border
+                        Padding="8,3"
+                        BackgroundColor="#E666CC"
+                        IsVisible="{Binding Session.HasStatus, Source={x:Reference Root}}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 9">
+                        <Label
+                            FontFamily="PoppinsSemiBold"
+                            FontAutoScalingEnabled="False"
+                            FontSize="10"
+                            Text="{Binding Session.StatusText, Source={x:Reference Root}}"
+                            TextColor="#0B1D51" />
+                    </Border>
+                </HorizontalStackLayout>
+                <Label
+                    Style="{DynamicResource CardTitleLabel}"
+                    Text="{Binding Session.Title, Source={x:Reference Root}}" />
+                <Label
+                    Style="{DynamicResource SecondaryLabel}"
+                    Text="{Binding Session.SpeakerText, Source={x:Reference Root}}" />
+                <Label
+                    IsVisible="{Binding Session.HasRoom, Source={x:Reference Root}}"
+                    Style="{DynamicResource CaptionLabel}"
+                    Text="{Binding Session.RoomText, Source={x:Reference Root}}" />
+            </VerticalStackLayout>
+
+            <Image
+                Grid.Column="2"
+                HeightRequest="20"
+                HorizontalOptions="End"
+                IsVisible="{Binding Session.IsNavigable, Source={x:Reference Root}}"
+                SemanticProperties.Description=""
+                VerticalOptions="Center"
+                WidthRequest="20">
+                <Image.Source>
+                    <FontImageSource
+                        Color="{AppThemeBinding Light=#52607E, Dark=#BBC6E2}"
+                        FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                        Glyph="{x:Static icons:FluentIconsRegular.ChevronRight24}"
+                        Size="20" />
+                </Image.Source>
+            </Image>
+        </Grid>
+    </Border>
+</ContentView>

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mauiday.net/schemas/event.schema.json",
+  "title": "MAUI Day event configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "editionLabel",
+    "city",
+    "country",
+    "date",
+    "timeZone",
+    "scheduleStatus",
+    "sessionize",
+    "venue",
+    "links",
+    "organizers",
+    "socialLinks",
+    "partners",
+    "brand",
+    "sessionOverrides"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "editionLabel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "city": {
+      "type": "string",
+      "minLength": 1
+    },
+    "country": {
+      "type": "string",
+      "minLength": 1
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "timeZone": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scheduleStatus": {
+      "enum": [
+        "preview",
+        "published",
+        "archived"
+      ]
+    },
+    "sessionize": {
+      "type": "object",
+      "required": [
+        "eventId",
+        "allDataUrl",
+        "bundledDataAsset"
+      ]
+    },
+    "venue": {
+      "type": "object",
+      "required": [
+        "name",
+        "addressLine1",
+        "postalCode",
+        "city",
+        "country",
+        "mapsUrl"
+      ]
+    },
+    "links": {
+      "type": "object",
+      "required": [
+        "website",
+        "tickets",
+        "codeOfConduct",
+        "privacy"
+      ]
+    },
+    "organizers": {
+      "type": "array",
+      "minItems": 1
+    },
+    "socialLinks": {
+      "type": "array"
+    },
+    "partners": {
+      "type": "array"
+    },
+    "brand": {
+      "type": "object",
+      "required": [
+        "editionBadgeUrl",
+        "bundledEditionBadge",
+        "primaryColor",
+        "accentColor"
+      ]
+    },
+    "sessionOverrides": {
+      "type": "object"
+    }
+  }
+}

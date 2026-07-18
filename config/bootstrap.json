@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "activeEventId": "cologne-2026",
+  "events": [
+    {
+      "id": "cologne-2026",
+      "name": "MAUI Day Cologne 2026",
+      "configUrl": "https://raw.githubusercontent.com/MauiDay/event-app/main/config/events/cologne-2026.json",
+      "bundledConfigAsset": "config/events/cologne-2026.json"
+    }
+  ]
+}

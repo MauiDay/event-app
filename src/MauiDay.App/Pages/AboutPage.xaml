@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.AboutPage"
+    x:Name="Root"
+    x:DataType="vm:AboutViewModel"
+    AutomationId="AboutPage"
+    Shell.TabBarIsVisible="False"
+    Title="About"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:config="clr-namespace:MauiDay.Core.Configuration;assembly=MauiDay.Core"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{StaticResource DetailPagePadding}" Spacing="22">
+            <Border
+                Padding="22"
+                BackgroundColor="{StaticResource BrandNavy}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 24">
+                <VerticalStackLayout Spacing="16">
+                    <Image
+                        HeightRequest="44"
+                        HorizontalOptions="Start"
+                        SemanticProperties.Description="MAUI Day"
+                        Source="mauiday_logo_light.svg" />
+                    <Label
+                        FontSize="16"
+                        LineHeight="1.35"
+                        Text="Your companion for one focused day of .NET MAUI."
+                        TextColor="#DDE7FF" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource SecondaryLabel}"
+                Text="{Binding VersionText}" />
+
+            <Button
+                AutomationId="AboutWebsiteButton"
+                Command="{Binding OpenWebsiteCommand}"
+                Style="{StaticResource PrimaryButton}"
+                Text="Visit mauiday.net" />
+            <Button
+                AutomationId="AboutPrivacyButton"
+                Command="{Binding OpenPrivacyCommand}"
+                Style="{StaticResource SecondaryButton}"
+                Text="Privacy policy" />
+
+            <VerticalStackLayout Spacing="10">
+                <Label Style="{StaticResource SectionTitleLabel}" Text="Follow MAUI Day" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding SocialLinks}" Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="config:ExternalLink">
+                            <Button
+                                AutomationId="{Binding Title, StringFormat='Social_{0}'}"
+                                Command="{Binding BindingContext.OpenSocialLinkCommand, Source={x:Reference Root}}"
+                                CommandParameter="{Binding .}"
+                                Style="{StaticResource SecondaryButton}"
+                                Text="{Binding Title}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <Border Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Style="{StaticResource CardTitleLabel}" Text="Open-source notices" />
+                    <Label Style="{StaticResource SecondaryLabel}" Text="{Binding LicenseSummary}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding HasStatusMessage}"
+                Style="{StaticResource CaptionLabel}"
+                Text="{Binding StatusMessage}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

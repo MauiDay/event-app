@@ -1,0 +1,158 @@
+name: Publish Android (Google Play)
+
+# Builds a signed .aab and uploads it to Google Play.
+# All account-specific values come from GitHub Actions secrets / variables.
+# See docs/publishing.md for the full list of required secrets and variables.
+
+on:
+  workflow_dispatch:
+    inputs:
+      display_version:
+        description: "ApplicationDisplayVersion (marketing version, e.g. 1.0). Leave empty to use the csproj value."
+        required: false
+        type: string
+      build_number:
+        description: "ApplicationVersion (versionCode, e.g. 42). Leave empty to use the run number."
+        required: false
+        type: string
+      play_track:
+        description: "Google Play track to release to."
+        required: false
+        default: "internal"
+        type: choice
+        options:
+          - internal
+          - alpha
+          - beta
+          - production
+  release:
+    types: [published]
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_SDK_VERSION: "11.0.100-preview.6.26359.118"
+  APP_PROJECT: "src/MauiDay.App/MauiDay.App.csproj"
+  TARGET_FRAMEWORK: "net11.0-android"
+
+jobs:
+  publish-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java (required by Android SDK tooling)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup .NET SDK (pinned preview)
+        id: setup-dotnet
+        uses: actions/setup-dotnet@v4
+        continue-on-error: true
+        with:
+          dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
+
+      - name: Fallback install pinned .NET SDK via dotnet-install
+        if: steps.setup-dotnet.outcome != 'success'
+        run: |
+          curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+          chmod +x dotnet-install.sh
+          ./dotnet-install.sh --version "${DOTNET_SDK_VERSION}" --install-dir "$HOME/.dotnet"
+          echo "$HOME/.dotnet" >> "$GITHUB_PATH"
+          echo "DOTNET_ROOT=$HOME/.dotnet" >> "$GITHUB_ENV"
+
+      - name: Print .NET info
+        run: dotnet --info
+
+      - name: Restore MAUI workloads
+        run: dotnet workload restore ${{ env.APP_PROJECT }}
+
+      - name: Decode Android keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/signing.keystore"
+          echo "ANDROID_KEYSTORE_PATH=$RUNNER_TEMP/signing.keystore" >> "$GITHUB_ENV"
+
+      - name: Compute version arguments
+        id: versionargs
+        run: |
+          ARGS=""
+          DISPLAY_VERSION="${{ inputs.display_version }}"
+          BUILD_NUMBER="${{ inputs.build_number }}"
+          if [ -z "$DISPLAY_VERSION" ] && [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            DISPLAY_VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          if [ -z "$BUILD_NUMBER" ]; then
+            BUILD_NUMBER="${GITHUB_RUN_NUMBER}"
+          fi
+          if [ -n "$DISPLAY_VERSION" ]; then
+            ARGS="$ARGS -p:ApplicationDisplayVersion=$DISPLAY_VERSION"
+          fi
+          if [ -n "$BUILD_NUMBER" ]; then
+            ARGS="$ARGS -p:ApplicationVersion=$BUILD_NUMBER"
+          fi
+          echo "args=$ARGS" >> "$GITHUB_OUTPUT"
+          echo "Version args: $ARGS"
+
+      - name: Build signed .aab
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          dotnet publish "${{ env.APP_PROJECT }}" \
+            -c Release \
+            -f "${{ env.TARGET_FRAMEWORK }}" \
+            -p:AndroidPackageFormat=aab \
+            -p:AndroidKeyStore=true \
+            -p:AndroidSigningKeyStore="${ANDROID_KEYSTORE_PATH}" \
+            -p:AndroidSigningStorePass="${ANDROID_KEYSTORE_PASSWORD}" \
+            -p:AndroidSigningKeyAlias="${ANDROID_KEY_ALIAS}" \
+            -p:AndroidSigningKeyPass="${ANDROID_KEY_PASSWORD}" \
+            ${{ steps.versionargs.outputs.args }}
+
+      - name: Locate .aab
+        id: findaab
+        run: |
+          AAB_PATH=$(find src/MauiDay.App -name "*-Signed.aab" -print -quit)
+          if [ -z "$AAB_PATH" ]; then
+            AAB_PATH=$(find src/MauiDay.App -name "*.aab" -print -quit)
+          fi
+          if [ -z "$AAB_PATH" ]; then
+            echo "No .aab produced" >&2
+            exit 1
+          fi
+          echo "aab_path=$AAB_PATH" >> "$GITHUB_OUTPUT"
+          echo "Found aab: $AAB_PATH"
+
+      - name: Upload .aab artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MauiDay-android-aab
+          path: ${{ steps.findaab.outputs.aab_path }}
+          if-no-files-found: error
+
+      - name: Write Google Play service account JSON
+        env:
+          GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          printf '%s' "$GOOGLE_PLAY_SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/play-service-account.json"
+          echo "PLAY_SA_JSON_PATH=$RUNNER_TEMP/play-service-account.json" >> "$GITHUB_ENV"
+
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1.1.3
+        with:
+          serviceAccountJson: ${{ env.PLAY_SA_JSON_PATH }}
+          packageName: ${{ vars.ANDROID_PACKAGE_NAME }}
+          releaseFiles: ${{ steps.findaab.outputs.aab_path }}
+          track: ${{ inputs.play_track || 'internal' }}
+          status: completed

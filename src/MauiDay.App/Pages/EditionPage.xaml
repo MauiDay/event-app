@@ -54,34 +54,36 @@
             </Border>
 
             <Border AutomationId="EditionBadgePickup" Style="{StaticResource CardBorder}">
-                <Grid ColumnDefinitions="44,*" ColumnSpacing="14">
-                    <Image
-                        HeightRequest="30"
-                        SemanticProperties.Description=""
-                        VerticalOptions="Start"
-                        WidthRequest="30">
-                        <Image.Source>
-                            <FontImageSource
-                                Color="{StaticResource BrandDeepPink}"
-                                FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
-                                Glyph="{x:Static icons:FluentIconsRegular.TicketDiagonal24}"
-                                Size="28" />
-                        </Image.Source>
-                    </Image>
-                    <VerticalStackLayout Grid.Column="1" Spacing="6">
-                        <Label Style="{StaticResource CardTitleLabel}" Text="Collect your badge" />
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="12">
+                        <Image
+                            HeightRequest="26"
+                            SemanticProperties.Description=""
+                            VerticalOptions="Center"
+                            WidthRequest="26">
+                            <Image.Source>
+                                <FontImageSource
+                                    Color="{StaticResource BrandDeepPink}"
+                                    FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
+                                    Glyph="{x:Static icons:FluentIconsRegular.TicketDiagonal24}"
+                                    Size="24" />
+                            </Image.Source>
+                        </Image>
                         <Label
-                            Style="{StaticResource BodyLabel}"
-                            Text="Don't forget to pick up your physical badge and lanyard at the registration desk when you arrive. Bring your ticket (printed or on your phone) so the team can check you in quickly." />
-                    </VerticalStackLayout>
-                </Grid>
+                            Style="{StaticResource CardTitleLabel}"
+                            Text="Collect your badge"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Label
+                        Style="{StaticResource BodyLabel}"
+                        Text="Don't forget to pick up your physical badge and lanyard at the registration desk when you arrive. Bring your ticket (printed or on your phone) so the team can check you in quickly." />
+                </VerticalStackLayout>
             </Border>
 
             <Border AutomationId="EditionWhen" Style="{StaticResource CardBorder}">
                 <VerticalStackLayout Spacing="5">
                     <Label Style="{StaticResource EyebrowLabel}" Text="WHEN" />
                     <Label Style="{StaticResource CardTitleLabel}" Text="{Binding DateText}" />
-                    <Label Style="{StaticResource SecondaryLabel}" Text="{Binding LocationText}" />
                 </VerticalStackLayout>
             </Border>
 

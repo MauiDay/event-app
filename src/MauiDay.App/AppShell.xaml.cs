@@ -24,4 +24,21 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(CodeOfConductPage), typeof(CodeOfConductPage));
 		Routing.RegisterRoute(nameof(AboutPage), typeof(AboutPage));
 	}
+
+	protected override void OnNavigated(ShellNavigatedEventArgs args)
+	{
+		base.OnNavigated(args);
+#if ANDROID
+		// MAUI repaints the status bar on every navigation; re-sync the icon
+		// contrast afterward so it stays readable. Posting (twice, with a small
+		// delay) defers past MAUI's own status-bar update on this frame.
+		if (Platform.CurrentActivity is MainActivity activity)
+		{
+			activity.SyncStatusBarIcons();
+			var decorView = activity.Window?.DecorView;
+			decorView?.Post(activity.SyncStatusBarIcons);
+			decorView?.PostDelayed(activity.SyncStatusBarIcons, 120);
+		}
+#endif
+	}
 }

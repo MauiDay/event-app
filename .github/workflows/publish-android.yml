@@ -72,8 +72,8 @@ jobs:
       - name: Print .NET info
         run: dotnet --info
 
-      - name: Restore MAUI workloads
-        run: dotnet workload restore ${{ env.APP_PROJECT }}
+      - name: Install MAUI Android workload
+        run: dotnet workload install maui-android
 
       - name: Decode Android keystore
         env:
@@ -112,6 +112,7 @@ jobs:
           dotnet publish "${{ env.APP_PROJECT }}" \
             -c Release \
             -f "${{ env.TARGET_FRAMEWORK }}" \
+            -p:CIBuildTfm="${{ env.TARGET_FRAMEWORK }}" \
             -p:AndroidPackageFormat=aab \
             -p:AndroidKeyStore=true \
             -p:AndroidSigningKeyStore="${ANDROID_KEYSTORE_PATH}" \

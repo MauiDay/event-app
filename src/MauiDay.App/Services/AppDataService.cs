@@ -174,6 +174,19 @@ public sealed class AppDataService(
                 ? baseline.ConferenceSource
                 : ContentSource.Remote;
 
+            // The schedule and the configuration must describe the same event. If we adopted a
+            // configuration for a different event but could not load its schedule, publishing the
+            // pair would show the previous event's sessions under the new event's identity. Keep
+            // the whole baseline instead so the two never drift apart during an event rollover.
+            if (remoteConference is null &&
+                !string.Equals(eventConfiguration.Id, baseline.Event.Id, StringComparison.Ordinal))
+            {
+                eventConfiguration = baseline.Event;
+                configurationSource = baseline.ConfigurationSource;
+                conference = baseline.Conference;
+                conferenceSource = baseline.ConferenceSource;
+            }
+
             SetCurrent(new AppDataSnapshot(
                 eventConfiguration,
                 conference,
@@ -202,6 +215,12 @@ public sealed class AppDataService(
         catch (UnauthorizedAccessException exception)
         {
             logger.LogWarning(exception, "The content cache was not accessible during refresh.");
+        }
+        catch (Exception exception)
+        {
+            logger.LogError(
+                exception,
+                "The background content refresh failed unexpectedly; keeping the current data.");
         }
     }
 
@@ -286,8 +305,20 @@ public sealed class AppDataService(
                     LastModified = response.Content.Headers.LastModified,
                 };
 
-                await storage.WriteCacheAsync(cacheKey, envelope, cancellationToken)
-                    .ConfigureAwait(false);
+                try
+                {
+                    await storage.WriteCacheAsync(cacheKey, envelope, cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception exception)
+                    when (exception is IOException or UnauthorizedAccessException)
+                {
+                    logger.LogWarning(
+                        exception,
+                        "Could not persist remote content from {Uri}; using the fresh data anyway.",
+                        uri);
+                }
+
                 return new LoadedRemote<T>(value, envelope);
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)

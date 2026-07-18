@@ -11,13 +11,15 @@ public sealed class SessionizeMapper(IEventTimeService eventTimeService)
         ArgumentNullException.ThrowIfNull(payload);
         ArgumentNullException.ThrowIfNull(eventConfiguration);
 
-        var rooms = payload.Rooms
+        var rooms = (payload.Rooms ?? [])
+            .Where(room => room is not null)
             .Select(room => new EventRoom(room.Id, RequireValue(room.Name, "room name"), room.Sort))
             .OrderBy(room => room.Sort)
             .ThenBy(room => room.Name, StringComparer.OrdinalIgnoreCase)
             .ToArray();
 
-        var sessions = payload.Sessions
+        var sessions = (payload.Sessions ?? [])
+            .Where(session => session is not null)
             .Select(session => MapSession(session, eventConfiguration))
             .Where(session => session is not null)
             .Cast<EventSession>()
@@ -33,7 +35,8 @@ public sealed class SessionizeMapper(IEventTimeService eventTimeService)
                 group => (IReadOnlyList<string>)group.Select(link => link.Id).Distinct().ToArray(),
                 StringComparer.Ordinal);
 
-        var speakers = payload.Speakers
+        var speakers = (payload.Speakers ?? [])
+            .Where(speaker => speaker is not null)
             .Select(speaker => MapSpeaker(speaker, linkedSessionIdsBySpeaker))
             .OrderBy(speaker => speaker.FullName, StringComparer.OrdinalIgnoreCase)
             .ToArray();
@@ -73,7 +76,7 @@ public sealed class SessionizeMapper(IEventTimeService eventTimeService)
             startsAt,
             endsAt,
             session.IsServiceSession,
-            session.Speakers.Where(value => !string.IsNullOrWhiteSpace(value)).Distinct().ToArray(),
+            (session.Speakers ?? []).Where(value => !string.IsNullOrWhiteSpace(value)).Distinct().ToArray(),
             session.RoomId,
             sessionOverride?.Status ?? SessionDisplayStatus.Scheduled,
             CleanOptional(sessionOverride?.StatusNote));
@@ -90,7 +93,8 @@ public sealed class SessionizeMapper(IEventTimeService eventTimeService)
             ?? CleanOptional($"{firstName} {lastName}")
             ?? "Speaker to be announced";
 
-        var links = speaker.Links
+        var links = (speaker.Links ?? [])
+            .Where(link => link is not null)
             .Select(link =>
             {
                 if (!Uri.TryCreate(link.Url, UriKind.Absolute, out var uri) ||
@@ -114,7 +118,7 @@ public sealed class SessionizeMapper(IEventTimeService eventTimeService)
 
         linkedSessionIdsBySpeaker.TryGetValue(id, out var linkedSessionIds);
         var sessionIds = (linkedSessionIds ?? [])
-            .Concat(speaker.Sessions.Select(sessionId => sessionId.ToString()))
+            .Concat((speaker.Sessions ?? []).Select(sessionId => sessionId.ToString()))
             .Distinct(StringComparer.Ordinal)
             .ToArray();
 

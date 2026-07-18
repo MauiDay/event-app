@@ -17,13 +17,14 @@ public static class ConfigurationValidator
         }
 
         RequireText(bootstrap.ActiveEventId, "active event id");
-        if (bootstrap.Events.Count == 0)
+        if (bootstrap.Events is null || bootstrap.Events.Count == 0)
         {
             throw new ConfigurationValidationException("Bootstrap must contain at least one event.");
         }
 
         foreach (var descriptor in bootstrap.Events)
         {
+            RequireObject(descriptor, "event descriptor");
             RequireText(descriptor.Id, "event id");
             RequireText(descriptor.Name, $"name for event '{descriptor.Id}'");
             RequireWebUri(descriptor.ConfigUrl, $"config URL for event '{descriptor.Id}'");
@@ -52,11 +53,15 @@ public static class ConfigurationValidator
                 $"Unsupported event schema version {eventConfiguration.SchemaVersion}.");
         }
 
-        if (!eventConfiguration.Id.Equals(expectedEventId, StringComparison.Ordinal))
+        if (!string.Equals(eventConfiguration.Id, expectedEventId, StringComparison.Ordinal))
         {
             throw new ConfigurationValidationException(
                 $"Event config id '{eventConfiguration.Id}' does not match '{expectedEventId}'.");
         }
+
+        RequireObject(eventConfiguration.Sessionize, "Sessionize configuration");
+        RequireObject(eventConfiguration.Venue, "venue configuration");
+        RequireObject(eventConfiguration.Links, "event links");
 
         RequireText(eventConfiguration.Name, "event name");
         RequireText(eventConfiguration.EditionLabel, "event edition label");
@@ -74,7 +79,7 @@ public static class ConfigurationValidator
         RequireWebUri(eventConfiguration.Links.CodeOfConduct, "Code of Conduct URL");
         RequireWebUri(eventConfiguration.Links.Privacy, "privacy URL");
 
-        if (eventConfiguration.Organizers.Count == 0)
+        if (eventConfiguration.Organizers is null || eventConfiguration.Organizers.Count == 0)
         {
             throw new ConfigurationValidationException(
                 "Event config must contain at least one organizer.");
@@ -82,16 +87,19 @@ public static class ConfigurationValidator
 
         foreach (var organizer in eventConfiguration.Organizers)
         {
+            RequireObject(organizer, "organizer");
             RequireText(organizer.Name, "organizer name");
-            if (!organizer.Email.Contains('@', StringComparison.Ordinal))
+            if (organizer.Email is null ||
+                !organizer.Email.Contains('@', StringComparison.Ordinal))
             {
                 throw new ConfigurationValidationException(
                     $"Organizer '{organizer.Name}' has an invalid email address.");
             }
         }
 
-        foreach (var partner in eventConfiguration.Partners)
+        foreach (var partner in eventConfiguration.Partners ?? [])
         {
+            RequireObject(partner, "partner");
             RequireText(partner.Name, "partner name");
             RequireWebUri(partner.LogoUrl, $"logo URL for '{partner.Name}'");
             RequireWebUri(partner.WebsiteUrl, $"website URL for '{partner.Name}'");
@@ -116,6 +124,14 @@ public static class ConfigurationValidator
     private static void RequireText(string? value, string fieldName)
     {
         if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ConfigurationValidationException($"Missing {fieldName}.");
+        }
+    }
+
+    private static void RequireObject(object? value, string fieldName)
+    {
+        if (value is null)
         {
             throw new ConfigurationValidationException($"Missing {fieldName}.");
         }

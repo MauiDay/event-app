@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+jobs:
+  android-and-tests:
+    name: Android build & unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # global.json pins an exact preview SDK (11.0.100-preview.6.26359.118).
+      # setup-dotnet's release index may not have this preview yet, so install
+      # it directly with the official dotnet-install script using the pinned version.
+      - name: Install pinned .NET SDK
+        run: |
+          curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+          chmod +x dotnet-install.sh
+          ./dotnet-install.sh --version 11.0.100-preview.6.26359.118 --install-dir "$HOME/.dotnet"
+          echo "$HOME/.dotnet" >> "$GITHUB_PATH"
+          echo "DOTNET_ROOT=$HOME/.dotnet" >> "$GITHUB_ENV"
+
+      - name: Verify SDK
+        run: dotnet --info
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'global.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore MAUI Android workload
+        run: dotnet workload restore src/MauiDay.App/MauiDay.App.csproj
+
+      - name: Build Android (unsigned, Release)
+        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -f net11.0-android
+
+      - name: Run unit tests
+        run: dotnet test tests/MauiDay.App.Tests/MauiDay.App.Tests.csproj -c Release
+
+  ios:
+    name: iOS build (unsigned)
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # The .NET 11 Preview 6 MAUI workload was validated locally against Xcode 26.6.
+      # Hosted macOS images may not ship that exact Xcode, so select the newest
+      # Xcode available on the runner rather than failing outright.
+      - name: Select latest Xcode
+        run: |
+          LATEST=$(ls -d /Applications/Xcode_*.app 2>/dev/null | sort -V | tail -n 1)
+          if [ -n "$LATEST" ]; then
+            echo "Selecting $LATEST"
+            sudo xcode-select -s "$LATEST/Contents/Developer"
+          fi
+          xcodebuild -version
+
+      - name: Install pinned .NET SDK
+        run: |
+          curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+          chmod +x dotnet-install.sh
+          ./dotnet-install.sh --version 11.0.100-preview.6.26359.118 --install-dir "$HOME/.dotnet"
+          echo "$HOME/.dotnet" >> "$GITHUB_PATH"
+          echo "DOTNET_ROOT=$HOME/.dotnet" >> "$GITHUB_ENV"
+
+      - name: Verify SDK
+        run: dotnet --info
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'global.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore MAUI iOS workload
+        run: dotnet workload restore src/MauiDay.App/MauiDay.App.csproj
+
+      - name: Build iOS (unsigned, Release)
+        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -f net11.0-ios /p:CodesignKey= /p:EnableCodeSigning=false

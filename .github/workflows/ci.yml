@@ -53,7 +53,7 @@ jobs:
         run: dotnet workload install maui-android
 
       - name: Build Android (unsigned, Release)
-        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -p:TargetFrameworks=net11.0-android
+        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -p:CIBuildTfm=net11.0-android
 
       - name: Run unit tests
         run: dotnet test tests/MauiDay.App.Tests/MauiDay.App.Tests.csproj -c Release
@@ -93,4 +93,4 @@ jobs:
         run: dotnet workload install maui-ios
 
       - name: Build iOS (unsigned, Release)
-        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -p:TargetFrameworks=net11.0-ios /p:CodesignKey= /p:EnableCodeSigning=false
+        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -p:CIBuildTfm=net11.0-ios /p:CodesignKey= /p:EnableCodeSigning=false

@@ -6,6 +6,9 @@ namespace MauiDay.Core.Services;
 
 public sealed class SessionizeMapper(IEventTimeService eventTimeService)
 {
+    private static readonly IReadOnlyDictionary<string, SessionOverride> EmptyOverrides =
+        new Dictionary<string, SessionOverride>();
+
     public ConferenceData Map(SessionizeAllDto payload, EventConfiguration eventConfiguration)
     {
         ArgumentNullException.ThrowIfNull(payload);
@@ -49,7 +52,7 @@ public sealed class SessionizeMapper(IEventTimeService eventTimeService)
         EventConfiguration eventConfiguration)
     {
         var id = RequireValue(session.Id, "session id");
-        eventConfiguration.SessionOverrides.TryGetValue(id, out var sessionOverride);
+        (eventConfiguration.SessionOverrides ?? EmptyOverrides).TryGetValue(id, out var sessionOverride);
         if (sessionOverride?.Hidden == true)
         {
             return null;

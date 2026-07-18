@@ -62,6 +62,10 @@ public static class ConfigurationValidator
         RequireObject(eventConfiguration.Sessionize, "Sessionize configuration");
         RequireObject(eventConfiguration.Venue, "venue configuration");
         RequireObject(eventConfiguration.Links, "event links");
+        RequireObject(eventConfiguration.SocialLinks, "social links");
+        RequireObject(eventConfiguration.Partners, "partners collection");
+        RequireObject(eventConfiguration.Brand, "brand configuration");
+        RequireObject(eventConfiguration.SessionOverrides, "session overrides");
 
         RequireText(eventConfiguration.Name, "event name");
         RequireText(eventConfiguration.EditionLabel, "event edition label");
@@ -97,13 +101,25 @@ public static class ConfigurationValidator
             }
         }
 
-        foreach (var partner in eventConfiguration.Partners ?? [])
+        foreach (var partner in eventConfiguration.Partners)
         {
             RequireObject(partner, "partner");
             RequireText(partner.Name, "partner name");
             RequireWebUri(partner.LogoUrl, $"logo URL for '{partner.Name}'");
             RequireWebUri(partner.WebsiteUrl, $"website URL for '{partner.Name}'");
         }
+
+        foreach (var socialLink in eventConfiguration.SocialLinks)
+        {
+            RequireObject(socialLink, "social link");
+            RequireText(socialLink.Title, "social link title");
+            RequireWebUri(socialLink.Url, $"URL for social link '{socialLink.Title}'");
+        }
+
+        RequireWebUri(eventConfiguration.Brand.EditionBadgeUrl, "edition badge URL");
+        RequireText(eventConfiguration.Brand.BundledEditionBadge, "bundled edition badge");
+        RequireText(eventConfiguration.Brand.PrimaryColor, "brand primary color");
+        RequireText(eventConfiguration.Brand.AccentColor, "brand accent color");
 
         try
         {

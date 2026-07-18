@@ -90,6 +90,10 @@ public sealed class ResilienceHardeningTests
     [InlineData("venue")]
     [InlineData("links")]
     [InlineData("organizers")]
+    [InlineData("socialLinks")]
+    [InlineData("partners")]
+    [InlineData("brand")]
+    [InlineData("sessionOverrides")]
     public void EventConfigWithNullRequiredSectionIsRejectedGracefully(string property)
     {
         var path = Path.Combine(AppContext.BaseDirectory, "config/events/cologne-2026.json");

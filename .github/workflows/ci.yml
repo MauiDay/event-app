@@ -46,33 +46,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: Restore MAUI Android workload
-        run: dotnet workload restore src/MauiDay.App/MauiDay.App.csproj
+      # Only the Android workload is available on Linux; the app also targets
+      # net11.0-ios, so restrict the build to the Android TFM to avoid restoring
+      # the iOS SDK packs (NETSDK1178) which don't exist on this OS.
+      - name: Install MAUI Android workload
+        run: dotnet workload install maui-android
 
       - name: Build Android (unsigned, Release)
-        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -f net11.0-android
+        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -p:TargetFrameworks=net11.0-android
 
       - name: Run unit tests
         run: dotnet test tests/MauiDay.App.Tests/MauiDay.App.Tests.csproj -c Release
 
   ios:
     name: iOS build (unsigned)
-    runs-on: macos-15
+    # The .NET 11 Preview 6 iOS SDK (26.5.11720-net11-p6) requires Xcode 26.6,
+    # which ships by default on the macos-26 image.
+    runs-on: macos-26
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # The .NET 11 Preview 6 MAUI workload was validated locally against Xcode 26.6.
-      # Hosted macOS images may not ship that exact Xcode, so select the newest
-      # Xcode available on the runner rather than failing outright.
-      - name: Select latest Xcode
-        run: |
-          LATEST=$(ls -d /Applications/Xcode_*.app 2>/dev/null | sort -V | tail -n 1)
-          if [ -n "$LATEST" ]; then
-            echo "Selecting $LATEST"
-            sudo xcode-select -s "$LATEST/Contents/Developer"
-          fi
-          xcodebuild -version
+      - name: Show Xcode version
+        run: xcodebuild -version
 
       - name: Install pinned .NET SDK
         run: |
@@ -93,8 +89,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: Restore MAUI iOS workload
-        run: dotnet workload restore src/MauiDay.App/MauiDay.App.csproj
+      - name: Install MAUI iOS workload
+        run: dotnet workload install maui-ios
 
       - name: Build iOS (unsigned, Release)
-        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -f net11.0-ios /p:CodesignKey= /p:EnableCodeSigning=false
+        run: dotnet build src/MauiDay.App/MauiDay.App.csproj -c Release -p:TargetFrameworks=net11.0-ios /p:CodesignKey= /p:EnableCodeSigning=false

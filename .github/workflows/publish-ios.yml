@@ -31,15 +31,21 @@ env:
 
 jobs:
   publish-ios:
-    runs-on: macos-15
+    runs-on: macos-26
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Select Xcode 26.6
-        run: sudo xcode-select -s /Applications/Xcode_26.6.app/Contents/Developer
-        continue-on-error: true
+        run: |
+          if [ -d /Applications/Xcode_26.6.app ]; then
+            sudo xcode-select -s /Applications/Xcode_26.6.app/Contents/Developer
+          else
+            LATEST=$(ls -d /Applications/Xcode_*.app 2>/dev/null | sort -V | tail -n 1)
+            [ -n "$LATEST" ] && sudo xcode-select -s "$LATEST/Contents/Developer"
+          fi
+          xcodebuild -version
 
       - name: Setup .NET SDK (pinned preview)
         id: setup-dotnet
@@ -60,8 +66,8 @@ jobs:
       - name: Print .NET info
         run: dotnet --info
 
-      - name: Restore MAUI workloads
-        run: dotnet workload restore ${{ env.APP_PROJECT }}
+      - name: Install MAUI iOS workload
+        run: dotnet workload install maui-ios
 
       - name: Import Apple code-signing certificate and provisioning profile
         uses: apple-actions/import-codesign-certs@v3

@@ -12,13 +12,15 @@ using Microsoft.Extensions.Logging;
 namespace MauiDay.App.Services;
 
 public sealed class AppDataService(
-    HttpClient httpClient,
+    IHttpClientFactory httpClientFactory,
     IAppStorage storage,
     SessionizeMapper sessionizeMapper,
     IDataScenarioProvider scenarioProvider,
     TimeProvider timeProvider,
     ILogger<AppDataService> logger) : IAppDataService
 {
+    public const string HttpClientName = "mauiday";
+
     private const string BootstrapAsset = "config/bootstrap.json";
     private const string BootstrapCacheKey = "bootstrap-v1";
 
@@ -252,10 +254,11 @@ public sealed class AppDataService(
             logger.LogWarning(exception, "Could not read cache entry {CacheKey}.", cacheKey);
         }
 
+        var httpClient = httpClientFactory.CreateClient(HttpClientName);
+
         for (var attempt = 1; attempt <= 2; attempt++)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            request.Headers.UserAgent.ParseAdd("MauiDay-Companion/1.0");
 
             if (EntityTagHeaderValue.TryParse(cachedEnvelope?.ETag, out var etag))
             {

@@ -11,6 +11,7 @@
     <Border
         AutomationId="{Binding AutomationId, Source={x:Reference Root}}"
         SemanticProperties.Description="{Binding Session.AccessibilityDescription, Source={x:Reference Root}}"
+        SemanticProperties.Hint="Opens session details"
         Style="{DynamicResource CardBorder}">
         <Border.GestureRecognizers>
             <TapGestureRecognizer

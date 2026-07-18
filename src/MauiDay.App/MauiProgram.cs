@@ -26,8 +26,11 @@ public static class MauiProgram
 			})
 			.UseFluentIcons();
 
-		builder.Services.AddSingleton(
-			new HttpClient { Timeout = Timeout.InfiniteTimeSpan });
+		builder.Services.AddHttpClient(AppDataService.HttpClientName, client =>
+		{
+			client.Timeout = Timeout.InfiniteTimeSpan;
+			client.DefaultRequestHeaders.UserAgent.ParseAdd("MauiDay-Companion/1.0");
+		});
 		builder.Services.AddSingleton<TimeProvider, AppTimeProvider>();
 		builder.Services.AddSingleton<IEventTimeService, EventTimeService>();
 		builder.Services.AddSingleton<SessionizeMapper>();

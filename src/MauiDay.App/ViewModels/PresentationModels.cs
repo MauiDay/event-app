@@ -94,23 +94,14 @@ public sealed record PartnerCardModel(
     string Name,
     PartnerTier Tier,
     Uri LogoUrl,
-    Uri WebsiteUrl,
-    string Initials)
+    Uri WebsiteUrl)
 {
     public static PartnerCardModel Create(PartnerConfiguration partner)
     {
-        var initials = string.Concat(
-            partner.Name
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .Take(2)
-                .Select(word => word[0]))
-            .ToUpperInvariant();
-
         return new PartnerCardModel(
             partner.Name,
             partner.Tier,
             partner.LogoUrl,
-            partner.WebsiteUrl,
-            initials);
+            partner.WebsiteUrl);
     }
 }

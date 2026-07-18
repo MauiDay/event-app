@@ -11,6 +11,7 @@
     <Border
         AutomationId="{Binding AutomationId, Source={x:Reference Root}}"
         SemanticProperties.Description="{Binding Speaker.AccessibilityDescription, Source={x:Reference Root}}"
+        SemanticProperties.Hint="Opens speaker profile"
         Style="{DynamicResource CardBorder}">
         <Border.GestureRecognizers>
             <TapGestureRecognizer

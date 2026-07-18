@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.CodeOfConductPage"
+    x:Name="Root"
+    x:DataType="vm:CodeOfConductViewModel"
+    AutomationId="CodeOfConductPage"
+    Shell.TabBarIsVisible="False"
+    Title="Code of Conduct"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:config="clr-namespace:MauiDay.Core.Configuration;assembly=MauiDay.Core"
+    xmlns:models="clr-namespace:MauiDay.App.ViewModels"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{StaticResource DetailPagePadding}" Spacing="22">
+            <VerticalStackLayout Spacing="7">
+                <Label Style="{StaticResource PageTitleLabel}" Text="Everyone belongs here" />
+                <Label
+                    Style="{StaticResource SecondaryLabel}"
+                    Text="MAUI Day is committed to an open, welcoming, diverse, inclusive, and healthy community." />
+            </VerticalStackLayout>
+
+            <Border Style="{StaticResource SubtleBorder}">
+                <VerticalStackLayout Spacing="9">
+                    <Label Style="{StaticResource CardTitleLabel}" Text="Need help during the event?" />
+                    <Label
+                        Style="{StaticResource SecondaryLabel}"
+                        Text="Approach any organizer, or contact one of the people below. Reports are handled promptly, fairly, and privately." />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Organizers}" Spacing="6">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="config:OrganizerConfiguration">
+                                <Button
+                                    AutomationId="{Binding Name, StringFormat='ConductContact_{0}'}"
+                                    Command="{Binding BindingContext.EmailOrganizerCommand, Source={x:Reference Root}}"
+                                    CommandParameter="{Binding .}"
+                                    Style="{StaticResource SecondaryButton}"
+                                    Text="{Binding Name}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Sections}" Spacing="22">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:CodeOfConductSection">
+                        <VerticalStackLayout Spacing="9">
+                            <Label Style="{StaticResource SectionTitleLabel}" Text="{Binding Heading}" />
+                            <Label Style="{StaticResource BodyLabel}" Text="{Binding Body}" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Button
+                AutomationId="ConductAuthoritativeButton"
+                Command="{Binding OpenAuthoritativeVersionCommand}"
+                Style="{StaticResource SecondaryButton}"
+                Text="Read the authoritative web version" />
+
+            <Label
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding HasStatusMessage}"
+                Style="{StaticResource CaptionLabel}"
+                Text="{Binding StatusMessage}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

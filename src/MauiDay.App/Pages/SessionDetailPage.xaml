@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.SessionDetailPage"
+    x:Name="Root"
+    x:DataType="vm:SessionDetailViewModel"
+    AutomationId="SessionDetailPage"
+    Shell.NavBarIsVisible="True"
+    Shell.TabBarIsVisible="False"
+    Shell.TitleColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+    Title="Session"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiDay.App.Controls"
+    xmlns:models="clr-namespace:MauiDay.App.ViewModels"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{StaticResource DetailPagePadding}" Spacing="22">
+            <Border
+                AutomationId="SessionDetailHero"
+                Padding="22"
+                BackgroundColor="{StaticResource BrandNavy}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 24">
+                <VerticalStackLayout Spacing="12">
+                    <Label
+                        FontFamily="PoppinsSemiBold"
+                        FontSize="13"
+                        CharacterSpacing="1"
+                        Text="{Binding TimeText}"
+                        TextColor="{StaticResource BrandPink}" />
+                    <Label
+                        Style="{StaticResource PageTitleLabel}"
+                        Text="{Binding Title}"
+                        TextColor="{StaticResource White}" />
+                    <HorizontalStackLayout Spacing="8">
+                        <Border
+                            Padding="10,5"
+                            BackgroundColor="#263A77"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10">
+                            <Label
+                                FontSize="12"
+                                Text="{Binding DateText}"
+                                TextColor="#DDE7FF" />
+                        </Border>
+                        <Border
+                            Padding="10,5"
+                            BackgroundColor="#263A77"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10">
+                            <Label
+                                FontSize="12"
+                                Text="{Binding DurationText}"
+                                TextColor="#DDE7FF" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border IsVisible="{Binding HasSessionStatus}" Style="{StaticResource SubtleBorder}">
+                <Label Text="{Binding SessionStatus}" TextColor="{StaticResource Danger}" />
+            </Border>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Style="{StaticResource SectionTitleLabel}" Text="About this session" />
+                <Label
+                    AutomationId="SessionDescription"
+                    Style="{StaticResource BodyLabel}"
+                    Text="{Binding Description}" />
+            </VerticalStackLayout>
+
+            <Border IsVisible="{Binding ShowRoom}" Style="{StaticResource SubtleBorder}">
+                <Label Style="{StaticResource SecondaryLabel}" Text="{Binding RoomText}" />
+            </Border>
+
+            <VerticalStackLayout IsVisible="{Binding HasSpeakers}" Spacing="12">
+                <Label Style="{StaticResource SectionTitleLabel}" Text="Presented by" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Speakers}" Spacing="12">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:SpeakerCardModel">
+                            <controls:SpeakerCardView
+                                AutomationId="{Binding Id, StringFormat='SessionSpeaker_{0}'}"
+                                Command="{Binding BindingContext.OpenSpeakerCommand, Source={x:Reference Root}}"
+                                Speaker="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <Border
+                IsVisible="{Binding HasSpeakers, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource SubtleBorder}">
+                <Label
+                    Style="{StaticResource SecondaryLabel}"
+                    Text="Speaker information has not been published for this session yet." />
+            </Border>
+
+            <Label
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding HasStatusMessage}"
+                Style="{StaticResource CaptionLabel}"
+                Text="{Binding StatusMessage}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

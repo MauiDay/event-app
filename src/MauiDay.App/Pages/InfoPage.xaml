@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.InfoPage"
+    x:DataType="vm:InfoViewModel"
+    AutomationId="InfoPage"
+    Shell.NavBarIsVisible="False"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="20">
+            <VerticalStackLayout Spacing="5">
+                <Label Style="{StaticResource PageTitleLabel}" Text="Info" />
+                <Label Style="{StaticResource SecondaryLabel}" Text="{Binding EventName}" />
+            </VerticalStackLayout>
+
+            <Border AutomationId="InfoVenueCard" Style="{StaticResource CardBorder}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenVenueCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="44,*,Auto" ColumnSpacing="14">
+                    <Image
+                        HeightRequest="30"
+                        SemanticProperties.Description=""
+                        VerticalOptions="Start"
+                        WidthRequest="30"
+                        mi:MauiIcon.Value="{mi:Fluent Icon=Location24, IconSize=28, IconColor={StaticResource BrandDeepPink}}" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Style="{StaticResource CardTitleLabel}" Text="{Binding VenueName}" />
+                        <Label Style="{StaticResource SecondaryLabel}" Text="{Binding VenueAddress}" />
+                    </VerticalStackLayout>
+                    <Image
+                        Grid.Column="2"
+                        HeightRequest="20"
+                        SemanticProperties.Description=""
+                        VerticalOptions="Center"
+                        WidthRequest="20"
+                        mi:MauiIcon.Value="{mi:Fluent Icon=ChevronRight24, IconSize=20, IconColor={StaticResource BrandPurple}}" />
+                </Grid>
+            </Border>
+
+            <Border AutomationId="InfoPartnersCard" Style="{StaticResource CardBorder}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenPartnersCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="44,*,Auto" ColumnSpacing="14">
+                    <Image
+                        HeightRequest="30"
+                        SemanticProperties.Description=""
+                        VerticalOptions="Start"
+                        WidthRequest="30"
+                        mi:MauiIcon.Value="{mi:Fluent Icon=Handshake24, IconSize=28, IconColor={StaticResource BrandDeepPink}}" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Style="{StaticResource CardTitleLabel}" Text="Sponsors &amp; supporters" />
+                        <Label Style="{StaticResource SecondaryLabel}" Text="{Binding PartnerSummary}" />
+                    </VerticalStackLayout>
+                    <Image
+                        Grid.Column="2"
+                        HeightRequest="20"
+                        SemanticProperties.Description=""
+                        VerticalOptions="Center"
+                        WidthRequest="20"
+                        mi:MauiIcon.Value="{mi:Fluent Icon=ChevronRight24, IconSize=20, IconColor={StaticResource BrandPurple}}" />
+                </Grid>
+            </Border>
+
+            <Border AutomationId="InfoConductCard" Style="{StaticResource CardBorder}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenCodeOfConductCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="44,*,Auto" ColumnSpacing="14">
+                    <Image
+                        HeightRequest="30"
+                        SemanticProperties.Description=""
+                        VerticalOptions="Start"
+                        WidthRequest="30"
+                        mi:MauiIcon.Value="{mi:Fluent Icon=ShieldCheckmark24, IconSize=28, IconColor={StaticResource BrandDeepPink}}" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Style="{StaticResource CardTitleLabel}" Text="Code of Conduct" />
+                        <Label
+                            Style="{StaticResource SecondaryLabel}"
+                            Text="How we keep MAUI Day welcoming, inclusive, and safe." />
+                    </VerticalStackLayout>
+                    <Image
+                        Grid.Column="2"
+                        HeightRequest="20"
+                        SemanticProperties.Description=""
+                        VerticalOptions="Center"
+                        WidthRequest="20"
+                        mi:MauiIcon.Value="{mi:Fluent Icon=ChevronRight24, IconSize=20, IconColor={StaticResource BrandPurple}}" />
+                </Grid>
+            </Border>
+
+            <VerticalStackLayout Spacing="12">
+                <Button
+                    AutomationId="InfoTicketsButton"
+                    Command="{Binding OpenTicketsCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="Get tickets" />
+                <Button
+                    AutomationId="InfoWebsiteButton"
+                    Command="{Binding OpenWebsiteCommand}"
+                    Style="{StaticResource SecondaryButton}"
+                    Text="Website" />
+            </VerticalStackLayout>
+
+            <Button
+                AutomationId="InfoAboutButton"
+                Command="{Binding OpenAboutCommand}"
+                Style="{StaticResource TextButton}"
+                Text="About this app" />
+
+            <Label
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding HasStatusMessage}"
+                Style="{StaticResource CaptionLabel}"
+                Text="{Binding StatusMessage}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

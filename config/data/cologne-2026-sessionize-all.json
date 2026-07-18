@@ -1,0 +1,123 @@
+{
+  "sessions": [
+    {
+      "id": "1272305",
+      "title": "Building the Next Generation of Apps with .NET MAUI",
+      "description": ".NET MAUI continues to evolve as the modern .NET framework for building native, cross-platform apps. With .NET 11 rapidly approaching, this keynote looks at where .NET MAUI stands today, what is coming next, and how it fits into the future of mobile and desktop development.\r\n\r\nWe’ll explore the bigger themes shaping the platform: quality, performance, developer productivity, great native experiences, and the growing role of AI in how we build and use apps. Rather than focusing only on individual features, this session will connect the dots between the current state of .NET MAUI and the opportunities ahead.\r\n\r\nWhether you are building consumer apps, enterprise tools, internal productivity apps, or new AI-powered experiences, this session will show why .NET MAUI remains one of the best ways to turn ideas into native apps across platforms.",
+      "startsAt": "2026-10-23T09:00:00",
+      "endsAt": "2026-10-23T10:00:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "b5f674c8-199a-444d-bfaf-e8f8cd8a6248"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 85428,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    },
+    {
+      "id": "1272319",
+      "title": "Building with AI at the Edge",
+      "description": "Nobody can really predict what app development will look like in the next weeks and months exactly. The same skills that helped you grow and excel through every technology release and minor or major shift in the mobile race, those skills are what will make you successful today and tomorrow. The pace is just...a bit faster. In this session I'll share how we are using the latest tools and services to build efficiently, effectively, and sustainably.",
+      "startsAt": "2026-10-23T14:00:00",
+      "endsAt": "2026-10-23T15:00:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "9fd10a46-6e2a-4eae-9b6d-9cf8ff0ecf15"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 85428,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": false
+    },
+    {
+      "id": "1275845",
+      "title": "Keep writing code. Stop typing it. Massively distributed live coding with AI",
+      "description": "Engineers of the MAUI team, present and remotes, will live code an app. You'll see their funky prompting styles, the way they yell at copilot, and what can be achieved in a session.\r\nInteract live, or send pull-requests.",
+      "startsAt": "2026-10-23T16:00:00",
+      "endsAt": "2026-10-23T17:00:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "5ad7b431-a439-49ce-b663-c510d64583fe"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 85428,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    }
+  ],
+  "speakers": [
+    {
+      "id": "9fd10a46-6e2a-4eae-9b6d-9cf8ff0ecf15",
+      "firstName": "David",
+      "lastName": "Ortinau",
+      "bio": "David is a Principal Product Manager for .NET at Microsoft, focused on .NET MAUI. A .NET developer since 2002, and versed in a range of programming languages, David has developed web, environmental, and mobile experiences for a wide variety of industries. After several successes with tech startups and running his own software company, David joined Microsoft to follow his passion: crafting tools that help developers create better app experiences. When not at a computer or with his family, David is running through the woods.",
+      "tagLine": "Principal Product Manager at Microsoft",
+      "profilePicture": "https://cdn.sessionize.com/image/fc0f-400o400o1-31qm53unFBj8A279VcnKHn.jpg",
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1272319
+      ],
+      "fullName": "David Ortinau",
+      "categoryItems": [],
+      "questionAnswers": []
+    },
+    {
+      "id": "b5f674c8-199a-444d-bfaf-e8f8cd8a6248",
+      "firstName": "Gerald",
+      "lastName": "Versluis",
+      "bio": "Meet Gerald Versluis, software engineer at Microsoft, who wields the power of .NET to conquer any project that comes his way. With a career spanning over a decade, he's tackled it all, from frontend to backend and everything in between, using .NET MAUI, Azure, ASP.NET, and all the other .NET goodies. And these days of course; AI and Copilot.\r\n\r\nBut it wasn't until he discovered the magic of Xamarin that he truly fell in love with mobile and cross-platform development, becoming an active community member and sharing his knowledge through writing, tweeting, and presentations. When he's not saving the world of software, you can find him on Twitter @jfversluis, blogging at https://blog.verslu.is, or making videos on his YouTube channel: https://youtube.com/GeraldVersluis.",
+      "tagLine": "Senior Software Engineer at Microsoft",
+      "profilePicture": "https://cdn.sessionize.com/image/5989-400o400o1-XJS9YW2CA9hpY1774t84Tx.png",
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1272305
+      ],
+      "fullName": "Gerald Versluis",
+      "categoryItems": [],
+      "questionAnswers": []
+    },
+    {
+      "id": "5ad7b431-a439-49ce-b663-c510d64583fe",
+      "firstName": "Stéphane",
+      "lastName": "Delcroix",
+      "bio": "Software Engineer at Microsoft/Xamarin\r\n\r\nStéphane is a Software Engineer at Microsoft. He’s been working on MAUI (ex-Xamarin.Forms) since 2013. He’s been active in OpenSource development for the past 20+ years, and in the mono/.NET ecosystem since 2005.\r\n",
+      "tagLine": "Principal Software Engineer at Microsoft",
+      "profilePicture": "https://cdn.sessionize.com/image/8ffa-400o400o1-GbBKW1zqLHMJGD7yZSpKDk.jpg",
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1275845
+      ],
+      "fullName": "Stéphane Delcroix",
+      "categoryItems": [],
+      "questionAnswers": []
+    }
+  ],
+  "questions": [],
+  "categories": [],
+  "rooms": [
+    {
+      "id": 85428,
+      "name": "Room 1",
+      "sort": 0
+    }
+  ]
+}

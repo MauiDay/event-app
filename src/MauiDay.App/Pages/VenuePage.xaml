@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.VenuePage"
+    x:DataType="vm:VenueViewModel"
+    AutomationId="VenuePage"
+    Shell.TabBarIsVisible="False"
+    Title="Venue"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{StaticResource DetailPagePadding}" Spacing="20">
+            <Border
+                Padding="22"
+                BackgroundColor="{StaticResource BrandNavy}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 24">
+                <VerticalStackLayout Spacing="14">
+                    <Image
+                        HeightRequest="40"
+                        HorizontalOptions="Start"
+                        SemanticProperties.Description=""
+                        WidthRequest="40"
+                        mi:MauiIcon.Value="{mi:Fluent Icon=Location24, IconSize=38, IconColor={StaticResource BrandPink}}" />
+                    <Label
+                        Style="{StaticResource PageTitleLabel}"
+                        Text="{Binding Name}"
+                        TextColor="{StaticResource White}" />
+                    <Label
+                        FontSize="16"
+                        LineHeight="1.3"
+                        Text="{Binding Address}"
+                        TextColor="#DDE7FF" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button
+                AutomationId="VenueDirectionsButton"
+                Command="{Binding OpenDirectionsCommand}"
+                Style="{StaticResource PrimaryButton}"
+                Text="Open directions" />
+
+            <Border IsVisible="{Binding HasCapacity}" Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="5">
+                    <Label Style="{StaticResource EyebrowLabel}" Text="CAPACITY" />
+                    <Label Style="{StaticResource CardTitleLabel}" Text="{Binding CapacityText}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border IsVisible="{Binding HasTransit}" Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="5">
+                    <Label Style="{StaticResource EyebrowLabel}" Text="PUBLIC TRANSPORT" />
+                    <Label Style="{StaticResource BodyLabel}" Text="{Binding Transit}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border IsVisible="{Binding HasParking}" Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="5">
+                    <Label Style="{StaticResource EyebrowLabel}" Text="PARKING" />
+                    <Label Style="{StaticResource BodyLabel}" Text="{Binding Parking}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border IsVisible="{Binding HasArrivalNotes}" Style="{StaticResource CardBorder}">
+                <VerticalStackLayout Spacing="5">
+                    <Label Style="{StaticResource EyebrowLabel}" Text="ARRIVAL" />
+                    <Label Style="{StaticResource BodyLabel}" Text="{Binding ArrivalNotes}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding HasStatusMessage}"
+                Style="{StaticResource CaptionLabel}"
+                Text="{Binding StatusMessage}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

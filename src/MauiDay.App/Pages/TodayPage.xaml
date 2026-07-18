@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.TodayPage"
+    x:DataType="vm:TodayViewModel"
+    AutomationId="TodayPage"
+    Shell.NavBarIsVisible="False"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiDay.App.Controls"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <RefreshView
+        AutomationId="TodayRefresh"
+        Command="{Binding RefreshCommand}"
+        IsRefreshing="{Binding IsBusy}">
+        <ScrollView>
+            <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="22">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Image
+                        HeightRequest="28"
+                        HorizontalOptions="Start"
+                        SemanticProperties.Description="MAUI Day"
+                        Source="{AppThemeBinding Light=mauiday_logo_dark.svg, Dark=mauiday_logo_light.svg}" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource EyebrowLabel}"
+                        Text="{Binding EditionLabel}"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <Border
+                    AutomationId="TodayHero"
+                    Padding="22"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 24">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,1">
+                            <GradientStop Color="{StaticResource BrandNavy}" Offset="0" />
+                            <GradientStop Color="#263A77" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid ColumnDefinitions="*,96" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="12">
+                            <Label
+                                FontFamily="PoppinsSemiBold"
+                                FontSize="12"
+                                CharacterSpacing="1.1"
+                                Text="{Binding DateText}"
+                                TextColor="{StaticResource BrandBlue}" />
+                            <Label
+                                Style="{StaticResource DisplayLabel}"
+                                Text="{Binding HeroTitle}"
+                                TextColor="{StaticResource White}" />
+                            <Label
+                                FontSize="15"
+                                LineHeight="1.35"
+                                Text="{Binding HeroSubtitle}"
+                                TextColor="#DDE7FF" />
+                        </VerticalStackLayout>
+                        <Image
+                            Grid.Column="1"
+                            Aspect="AspectFit"
+                            HorizontalOptions="End"
+                            SemanticProperties.Description="Cologne 2026 edition"
+                            Source="cologne26.png"
+                            VerticalOptions="End" />
+                    </Grid>
+                </Border>
+
+                <Border AutomationId="TodayPhase" Style="{StaticResource CardBorder}">
+                    <VerticalStackLayout Spacing="9">
+                        <Label Style="{StaticResource EyebrowLabel}" Text="{Binding PhaseLabel}" />
+                        <Label Style="{StaticResource SectionTitleLabel}" Text="{Binding PhaseTitle}" />
+                        <Label Style="{StaticResource BodyLabel}" Text="{Binding PhaseDescription}" />
+                        <Label
+                            FontFamily="PoppinsSemiBold"
+                            FontSize="17"
+                            IsVisible="{Binding CountdownText, Converter={StaticResource StringNotEmptyConverter}}"
+                            Text="{Binding CountdownText}"
+                            TextColor="{StaticResource BrandDeepPink}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    AutomationId="SchedulePreviewNotice"
+                    IsVisible="{Binding IsPreview}"
+                    Style="{StaticResource SubtleBorder}">
+                    <Label
+                        Style="{StaticResource SecondaryLabel}"
+                        Text="Schedule preview — more sessions and program moments may still be added." />
+                </Border>
+
+                <VerticalStackLayout IsVisible="{Binding HasCurrentSession}" Spacing="12">
+                    <Label Style="{StaticResource SectionTitleLabel}" Text="Happening now" />
+                    <controls:SessionCardView
+                        AutomationId="TodayCurrentSession"
+                        Command="{Binding OpenSessionCommand}"
+                        Session="{Binding CurrentSession}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout IsVisible="{Binding HasNextSession}" Spacing="12">
+                    <Label Style="{StaticResource SectionTitleLabel}" Text="Up next" />
+                    <controls:SessionCardView
+                        AutomationId="TodayNextSession"
+                        Command="{Binding OpenSessionCommand}"
+                        Session="{Binding NextSession}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Style="{StaticResource SectionTitleLabel}" Text="Plan your day" />
+                    <VerticalStackLayout Spacing="12">
+                        <Button
+                            AutomationId="TodayScheduleButton"
+                            Command="{Binding OpenScheduleCommand}"
+                            Style="{StaticResource SecondaryButton}"
+                            Text="Schedule" />
+                        <Button
+                            AutomationId="TodaySpeakersButton"
+                            Command="{Binding OpenSpeakersCommand}"
+                            Style="{StaticResource SecondaryButton}"
+                            Text="Speakers" />
+                        <Button
+                            AutomationId="TodayVenueButton"
+                            Command="{Binding OpenVenueCommand}"
+                            Style="{StaticResource SecondaryButton}"
+                            Text="Venue" />
+                        <Button
+                            AutomationId="TodayPartnersButton"
+                            Command="{Binding OpenPartnersCommand}"
+                            Style="{StaticResource SecondaryButton}"
+                            Text="Partners" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <Border AutomationId="TodayVenueCard" Style="{StaticResource CardBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenVenueCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="6">
+                        <Label Style="{StaticResource EyebrowLabel}" Text="COLOGNE" />
+                        <Label Style="{StaticResource CardTitleLabel}" Text="{Binding VenueName}" />
+                        <Label Style="{StaticResource SecondaryLabel}" Text="{Binding LocationText}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding HasStatusMessage}"
+                    Style="{StaticResource CaptionLabel}"
+                    Text="{Binding StatusMessage}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

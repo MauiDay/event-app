@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiDay.App.Pages.SpeakersPage"
+    x:Name="Root"
+    x:DataType="vm:SpeakersViewModel"
+    AutomationId="SpeakersPage"
+    Shell.NavBarIsVisible="False"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiDay.App.Controls"
+    xmlns:models="clr-namespace:MauiDay.App.ViewModels"
+    xmlns:vm="clr-namespace:MauiDay.App.ViewModels">
+
+    <RefreshView
+        AutomationId="SpeakersRefresh"
+        Command="{Binding RefreshCommand}"
+        IsRefreshing="{Binding IsBusy}">
+        <ScrollView>
+            <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="20">
+                <VerticalStackLayout Spacing="5">
+                    <Label Style="{StaticResource PageTitleLabel}" Text="Speakers" />
+                    <Label
+                        Style="{StaticResource SecondaryLabel}"
+                        Text="Meet the people sharing what is next for .NET MAUI." />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    BindableLayout.ItemsSource="{Binding Speakers}"
+                    IsVisible="{Binding HasSpeakers}"
+                    Spacing="12">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:SpeakerCardModel">
+                            <controls:SpeakerCardView
+                                AutomationId="{Binding Id, StringFormat='SpeakerList_{0}'}"
+                                Command="{Binding BindingContext.OpenSpeakerCommand, Source={x:Reference Root}}"
+                                Speaker="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Border
+                    AutomationId="SpeakersEmptyState"
+                    IsVisible="{Binding HasSpeakers, Converter={StaticResource InvertedBoolConverter}}"
+                    Style="{StaticResource CardBorder}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Style="{StaticResource SectionTitleLabel}" Text="Speakers coming soon" />
+                        <Label
+                            Style="{StaticResource SecondaryLabel}"
+                            Text="No speaker profiles have been announced yet. Pull to check again." />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding HasStatusMessage}"
+                    Style="{StaticResource CaptionLabel}"
+                    Text="{Binding StatusMessage}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

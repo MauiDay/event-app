@@ -28,7 +28,10 @@ public sealed class TodayStateCalculator(IEventTimeService eventTimeService)
     {
         var eventNow = eventTimeService.ToEventTime(now, eventConfiguration.TimeZone);
         var localDate = DateOnly.FromDateTime(eventNow.DateTime);
-        var sessions = conference.Sessions.OrderBy(session => session.StartsAt).ToArray();
+        var sessions = conference.Sessions
+            .Where(session => session.DisplayStatus != SessionDisplayStatus.Cancelled)
+            .OrderBy(session => session.StartsAt)
+            .ToArray();
 
         if (localDate < eventConfiguration.Date)
         {

@@ -55,6 +55,11 @@
                                 TextColor="#DDE7FF" />
                         </Border>
                     </HorizontalStackLayout>
+                    <Label
+                        AutomationId="SessionDetailTimeZone"
+                        FontSize="12"
+                        Text="{Binding TimeZoneNote}"
+                        TextColor="#B9C6EC" />
                 </VerticalStackLayout>
             </Border>
 

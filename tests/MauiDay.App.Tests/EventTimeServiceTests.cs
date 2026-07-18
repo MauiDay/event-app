@@ -45,4 +45,16 @@ public sealed class EventTimeServiceTests
                 "2026-03-29T02:30:00",
                 "Europe/Berlin"));
     }
+
+    [Fact]
+    public void DescribeTimeZoneReportsCityAndSummerOffsetOnEventDay()
+    {
+        var label = _service.DescribeTimeZone(
+            "Europe/Berlin",
+            new DateOnly(2026, 10, 23),
+            "Cologne");
+
+        Assert.Contains("Cologne", label);
+        Assert.Contains("UTC+02:00", label);
+    }
 }

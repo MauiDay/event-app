@@ -20,6 +20,10 @@
                 <VerticalStackLayout Spacing="5">
                     <Label Style="{StaticResource PageTitleLabel}" Text="Schedule" />
                     <Label Style="{StaticResource SecondaryLabel}" Text="{Binding DateText}" />
+                    <Label
+                        AutomationId="ScheduleTimeZoneLabel"
+                        Style="{StaticResource CaptionLabel}"
+                        Text="{Binding TimeZoneLabel}" />
                 </VerticalStackLayout>
 
                 <Border IsVisible="{Binding IsPreview}" Style="{StaticResource SubtleBorder}">

@@ -37,7 +37,8 @@ public sealed record SessionCardModel(
         var eventNow = TimeZoneInfo.ConvertTime(
             now,
             TimeZoneInfo.FindSystemTimeZoneById(snapshot.Event.TimeZone));
-        var isLive = session.StartsAt <= eventNow && eventNow < session.EndsAt;
+        var isLive = session.DisplayStatus != SessionDisplayStatus.Cancelled
+            && session.StartsAt <= eventNow && eventNow < session.EndsAt;
         var showRoom = snapshot.Conference.Rooms.Count > 1;
         var roomText = showRoom
             ? snapshot.Conference.FindRoom(session.RoomId)?.Name

@@ -3,12 +3,14 @@ using CommunityToolkit.Mvvm.Input;
 using MauiDay.App.Services;
 using MauiDay.Core.Configuration;
 using MauiDay.Core.Models;
+using MauiDay.Core.Services;
 
 namespace MauiDay.App.ViewModels;
 
 public sealed partial class SessionDetailViewModel(
     IAppDataService dataService,
-    IAppNavigator navigator) : BaseViewModel
+    IAppNavigator navigator,
+    IEventTimeService eventTimeService) : BaseViewModel
 {
     private string? _sessionId;
     private string? _sourceSpeakerId;
@@ -28,6 +30,9 @@ public sealed partial class SessionDetailViewModel(
 
     [ObservableProperty]
     private string _durationText = string.Empty;
+
+    [ObservableProperty]
+    private string _timeZoneNote = string.Empty;
 
     [ObservableProperty]
     private string? _roomText;
@@ -76,6 +81,10 @@ public sealed partial class SessionDetailViewModel(
             : _session.Description;
         TimeText = $"{_session.StartsAt:HH:mm} - {_session.EndsAt:HH:mm}";
         DateText = _session.StartsAt.ToString("dddd, d MMMM yyyy");
+        TimeZoneNote = eventTimeService.DescribeTimeZone(
+            snapshot.Event.TimeZone,
+            snapshot.Event.Date,
+            snapshot.Event.City);
         DurationText = $"{Math.Max(1, (int)Math.Round(_session.Duration.TotalMinutes))} minutes";
         RoomText = snapshot.Conference.Rooms.Count > 1
             ? snapshot.Conference.FindRoom(_session.RoomId)?.Name

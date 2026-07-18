@@ -9,6 +9,8 @@ public interface IEventTimeService
     DateTimeOffset ParseSessionizeTimestamp(string value, string timeZoneId);
 
     DateTimeOffset ToEventTime(DateTimeOffset value, string timeZoneId);
+
+    string DescribeTimeZone(string timeZoneId, DateOnly onDate, string city);
 }
 
 public sealed class EventTimeService : IEventTimeService
@@ -62,6 +64,18 @@ public sealed class EventTimeService : IEventTimeService
 
     public DateTimeOffset ToEventTime(DateTimeOffset value, string timeZoneId) =>
         TimeZoneInfo.ConvertTime(value, GetTimeZone(timeZoneId));
+
+    public string DescribeTimeZone(string timeZoneId, DateOnly onDate, string city)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(city);
+
+        var timeZone = GetTimeZone(timeZoneId);
+        var reference = new DateTime(onDate.Year, onDate.Month, onDate.Day, 12, 0, 0, DateTimeKind.Unspecified);
+        var offset = timeZone.GetUtcOffset(reference);
+        var sign = offset < TimeSpan.Zero ? "-" : "+";
+        var offsetText = $"UTC{sign}{Math.Abs(offset.Hours):00}:{Math.Abs(offset.Minutes):00}";
+        return $"All times shown in {city} local time ({offsetText}).";
+    }
 
     private static bool HasExplicitOffset(string value)
     {

@@ -1,3 +1,5 @@
+using MauiDay.Core.Configuration;
+using MauiDay.Core.Models;
 using MauiDay.Core.Services;
 
 namespace MauiDay.App.Tests;
@@ -63,5 +65,32 @@ public sealed class TodayStateCalculatorTests
 
         Assert.Equal(TodayPhase.PostEvent, state.Phase);
         Assert.Null(state.NextSession);
+    }
+
+    [Fact]
+    public void CancelledSessionIsNeverTreatedAsLive()
+    {
+        var configuration = FixtureLoader.LoadEventConfiguration();
+        var start = _timeService.ParseSessionizeTimestamp(
+            "2026-10-23T09:00:00", configuration.TimeZone);
+        var end = _timeService.ParseSessionizeTimestamp(
+            "2026-10-23T10:00:00", configuration.TimeZone);
+        var conference = new ConferenceData(
+            [
+                new EventSession(
+                    "cancelled-1", "Cancelled talk", "Off", start, end,
+                    IsServiceSession: false, SpeakerIds: [], RoomId: null,
+                    SessionDisplayStatus.Cancelled, "This session has been cancelled."),
+            ],
+            [],
+            []);
+
+        var now = _timeService.ParseSessionizeTimestamp(
+            "2026-10-23T09:30:00", configuration.TimeZone);
+        var state = new TodayStateCalculator(_timeService).Calculate(
+            configuration, conference, now);
+
+        Assert.NotEqual(TodayPhase.Live, state.Phase);
+        Assert.Null(state.CurrentSession);
     }
 }

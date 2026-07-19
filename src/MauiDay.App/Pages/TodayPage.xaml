@@ -28,7 +28,7 @@
                     AutomationId="TodayHero"
                     Padding="20"
                     SemanticProperties.Description="{Binding EditionAccessibility}"
-                    SemanticProperties.Hint="Opens edition details and badge pickup"
+                    SemanticProperties.Hint="Opens edition details and patch pickup"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 24">
                     <Border.Background>
@@ -74,7 +74,7 @@
                                 <Label
                                     FontFamily="PoppinsSemiBold"
                                     FontSize="12"
-                                    Text="Details &amp; badge pickup"
+                                    Text="Details &amp; patch pickup"
                                     TextColor="{StaticResource BrandPink}"
                                     VerticalOptions="Center" />
                                 <Image

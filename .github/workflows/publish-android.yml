@@ -27,9 +27,6 @@ on:
           - production
   release:
     types: [published]
-  push:
-    tags:
-      - "v*"
 
 permissions:
   contents: read

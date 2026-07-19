@@ -124,6 +124,7 @@ jobs:
           dotnet publish "${{ env.APP_PROJECT }}" \
             -c Release \
             -f "${{ env.TARGET_FRAMEWORK }}" \
+            -p:CIBuildTfm="${{ env.TARGET_FRAMEWORK }}" \
             -p:ArchiveOnBuild=true \
             -p:RuntimeIdentifier=ios-arm64 \
             -p:CodesignKey="${CODESIGN_KEY}" \

@@ -55,7 +55,7 @@ public sealed partial class TodayViewModel : DataViewModel
     public bool HasCountdown => !string.IsNullOrEmpty(CountdownText);
 
     public string EditionAccessibility =>
-        $"{EditionLabel}, {DateText}. Opens edition details and badge pickup.";
+        $"{EditionLabel}, {DateText}. Opens edition details and patch pickup.";
 
     public TodayViewModel(
         IAppDataService dataService,

@@ -27,7 +27,7 @@
                         Aspect="AspectFit"
                         HeightRequest="132"
                         HorizontalOptions="Center"
-                        SemanticProperties.Description="Edition badge"
+                        SemanticProperties.Description="Edition patch"
                         Source="cologne26.png" />
                     <VerticalStackLayout Spacing="6">
                         <Label
@@ -65,18 +65,18 @@
                                 <FontImageSource
                                     Color="{StaticResource BrandDeepPink}"
                                     FontFamily="{x:Static icons:FluentIconsRegular.FontFamily}"
-                                    Glyph="{x:Static icons:FluentIconsRegular.TicketDiagonal24}"
+                                    Glyph="{x:Static icons:FluentIconsRegular.RibbonStar24}"
                                     Size="24" />
                             </Image.Source>
                         </Image>
                         <Label
                             Style="{StaticResource CardTitleLabel}"
-                            Text="Collect your badge"
+                            Text="Collect your patch"
                             VerticalOptions="Center" />
                     </HorizontalStackLayout>
                     <Label
                         Style="{StaticResource BodyLabel}"
-                        Text="Don't forget to pick up your physical badge and lanyard at the registration desk when you arrive. Bring your ticket (printed or on your phone) so the team can check you in quickly." />
+                        Text="Every MAUI Day has its own collectible patch. Swing by the registration desk when you arrive to grab this edition's patch and add it to your set." />
                 </VerticalStackLayout>
             </Border>
 

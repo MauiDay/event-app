@@ -14,6 +14,9 @@ public sealed partial class TodayViewModel : DataViewModel
     private readonly TodayStateCalculator _todayStateCalculator;
     private readonly TimeProvider _timeProvider;
     private AppDataSnapshot? _snapshot;
+    private TodayPhase? _appliedPhase;
+    private string? _currentSessionId;
+    private string? _nextSessionId;
 
     [ObservableProperty]
     private string _eventName = "MAUI Day Cologne";
@@ -34,7 +37,36 @@ public sealed partial class TodayViewModel : DataViewModel
     private string _phaseDescription = "The published program is still taking shape.";
 
     [ObservableProperty]
-    private string? _countdownText;
+    private string _countdownDays = "0";
+
+    [ObservableProperty]
+    private string _countdownHours = "0";
+
+    [ObservableProperty]
+    private string _countdownMinutes = "0";
+
+    [ObservableProperty]
+    private string _countdownSeconds = "0";
+
+    [ObservableProperty]
+    private string _countdownAccessibility = string.Empty;
+
+    private bool _hasCountdown;
+
+    public bool HasCountdown
+    {
+        get => _hasCountdown;
+        private set
+        {
+            if (_hasCountdown == value)
+            {
+                return;
+            }
+
+            _hasCountdown = value;
+            OnPropertyChanged();
+        }
+    }
 
     [ObservableProperty]
     private SessionCardModel? _currentSession;
@@ -51,8 +83,6 @@ public sealed partial class TodayViewModel : DataViewModel
     public bool HasCurrentSession => CurrentSession is not null;
 
     public bool HasNextSession => NextSession is not null;
-
-    public bool HasCountdown => !string.IsNullOrEmpty(CountdownText);
 
     public string EditionAccessibility =>
         $"{EditionLabel}, {DateText}. Opens edition details and patch pickup.";
@@ -74,17 +104,40 @@ public sealed partial class TodayViewModel : DataViewModel
     {
         if (_snapshot is not null)
         {
-            ApplySnapshot(_snapshot);
+            Recompute(fullRefresh: false);
         }
     }
 
     protected override void ApplySnapshot(AppDataSnapshot snapshot)
     {
         _snapshot = snapshot;
+        Recompute(fullRefresh: true);
+    }
+
+    private void Recompute(bool fullRefresh)
+    {
+        var snapshot = _snapshot!;
+        var now = _timeProvider.GetUtcNow();
         var state = _todayStateCalculator.Calculate(
             snapshot.Event,
             snapshot.Conference,
-            _timeProvider.GetUtcNow());
+            now);
+
+        // The countdown ticks every second, so refresh it on every pass.
+        UpdateCountdown(state.TimeUntilEvent, snapshot.Event.Name);
+
+        var currentId = state.CurrentSession?.Id;
+        var nextId = state.NextSession?.Id;
+
+        // Everything else only changes when the phase or featured sessions change,
+        // so avoid rebuilding session cards (and rebinding views) on every tick.
+        if (!fullRefresh
+            && state.Phase == _appliedPhase
+            && currentId == _currentSessionId
+            && nextId == _nextSessionId)
+        {
+            return;
+        }
 
         EventName = snapshot.Event.Name;
         EditionLabel = snapshot.Event.EditionLabel;
@@ -94,50 +147,67 @@ public sealed partial class TodayViewModel : DataViewModel
             $"{snapshot.Event.Venue.AddressLine1}, {snapshot.Event.Venue.PostalCode} {snapshot.Event.Venue.City}";
         CurrentSession = state.CurrentSession is null
             ? null
-            : SessionCardModel.Create(snapshot, state.CurrentSession, _timeProvider.GetUtcNow());
+            : SessionCardModel.Create(snapshot, state.CurrentSession, now);
         NextSession = state.NextSession is null
             ? null
-            : SessionCardModel.Create(snapshot, state.NextSession, _timeProvider.GetUtcNow());
+            : SessionCardModel.Create(snapshot, state.NextSession, now);
 
-        (PhaseLabel, PhaseTitle, PhaseDescription, CountdownText) = state.Phase switch
+        (PhaseLabel, PhaseTitle, PhaseDescription) = state.Phase switch
         {
             TodayPhase.PreEvent => (
                 "NEXT UP",
                 "Cologne is next",
-                "One focused day for .NET MAUI builders.",
-                FormatCountdown(state.TimeUntilEvent)),
+                "One focused day for .NET MAUI builders."),
             TodayPhase.EventDayBeforeStart => (
                 "TODAY",
                 "The room is getting ready",
-                "Your first published session is shown below.",
-                FormatStartCountdown(state.TimeUntilEvent)),
+                "Your first published session is shown below."),
             TodayPhase.Live => (
                 "LIVE NOW",
                 "MAUI Day is in progress",
-                "Follow the single-track program without missing a beat.",
-                null),
+                "Follow the single-track program without missing a beat."),
             TodayPhase.BetweenSessions => (
                 "COMING UP",
                 "A moment between sessions",
-                "The next published session is ready below.",
-                null),
+                "The next published session is ready below."),
             TodayPhase.EventDayUnscheduled => (
                 "TODAY",
                 "MAUI Day is here",
-                "The detailed program has not been published yet.",
-                null),
+                "The detailed program has not been published yet."),
             TodayPhase.PostEvent => (
                 "THAT'S A WRAP",
                 "Thanks for joining MAUI Day",
-                "Revisit the speakers and sessions from Cologne.",
-                null),
+                "Revisit the speakers and sessions from Cologne."),
             _ => throw new InvalidOperationException("Unknown Today phase."),
         };
 
+        _appliedPhase = state.Phase;
+        _currentSessionId = currentId;
+        _nextSessionId = nextId;
+
         OnPropertyChanged(nameof(HasCurrentSession));
         OnPropertyChanged(nameof(HasNextSession));
-        OnPropertyChanged(nameof(HasCountdown));
         OnPropertyChanged(nameof(EditionAccessibility));
+    }
+
+    private void UpdateCountdown(TimeSpan? timeUntilEvent, string eventName)
+    {
+        if (timeUntilEvent is null || timeUntilEvent.Value <= TimeSpan.Zero)
+        {
+            HasCountdown = false;
+            return;
+        }
+
+        var remaining = timeUntilEvent.Value;
+        var days = (int)remaining.TotalDays;
+
+        CountdownDays = days.ToString(CultureInfo.CurrentCulture);
+        CountdownHours = remaining.Hours.ToString(CultureInfo.CurrentCulture);
+        CountdownMinutes = remaining.Minutes.ToString(CultureInfo.CurrentCulture);
+        CountdownSeconds = remaining.Seconds.ToString(CultureInfo.CurrentCulture);
+        CountdownAccessibility =
+            $"{days} days, {remaining.Hours} hours, {remaining.Minutes} minutes and {remaining.Seconds} seconds until {eventName}.";
+        HasCountdown = true;
     }
 
     [RelayCommand]
@@ -161,37 +231,4 @@ public sealed partial class TodayViewModel : DataViewModel
     [RelayCommand]
     private Task OpenSessionAsync(SessionCardModel? session) =>
         session is null ? Task.CompletedTask : _navigator.OpenSessionAsync(session.Id);
-
-    private static string? FormatCountdown(TimeSpan? timeUntilEvent)
-    {
-        if (timeUntilEvent is null)
-        {
-            return null;
-        }
-
-        var days = Math.Max(0, (int)Math.Ceiling(timeUntilEvent.Value.TotalDays));
-        return days switch
-        {
-            0 => "It starts today",
-            1 => "1 day to go",
-            _ => $"{days} days to go",
-        };
-    }
-
-    private static string? FormatStartCountdown(TimeSpan? timeUntilStart)
-    {
-        if (timeUntilStart is null)
-        {
-            return null;
-        }
-
-        var minutes = Math.Max(0, (int)Math.Ceiling(timeUntilStart.Value.TotalMinutes));
-        if (minutes < 60)
-        {
-            return $"{minutes} min to the first session";
-        }
-
-        var hours = (int)Math.Ceiling(minutes / 60d);
-        return $"{hours} h to the first session";
-    }
 }

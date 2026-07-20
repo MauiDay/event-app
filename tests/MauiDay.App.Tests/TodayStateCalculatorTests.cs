@@ -65,6 +65,7 @@ public sealed class TodayStateCalculatorTests
 
         Assert.Equal(TodayPhase.PostEvent, state.Phase);
         Assert.Null(state.NextSession);
+        Assert.Null(state.TimeUntilEvent);
     }
 
     [Fact]

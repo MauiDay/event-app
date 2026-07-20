@@ -12,7 +12,7 @@ public partial class TodayPage : ContentPage
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
         _timer = Dispatcher.CreateTimer();
-        _timer.Interval = TimeSpan.FromMinutes(1);
+        _timer.Interval = TimeSpan.FromSeconds(1);
         _timer.Tick += (_, _) => _viewModel.UpdateTimeSensitiveState();
     }
 

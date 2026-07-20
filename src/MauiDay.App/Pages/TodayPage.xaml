@@ -94,17 +94,159 @@
                     </Grid>
                 </Border>
 
-                <Border AutomationId="TodayPhase" Style="{StaticResource CardBorder}">
+                <Border
+                    AutomationId="TodayPhase"
+                    IsVisible="{!HasCountdown}"
+                    Style="{StaticResource CardBorder}">
                     <VerticalStackLayout Spacing="9">
                         <Label Style="{StaticResource EyebrowLabel}" Text="{Binding PhaseLabel}" />
                         <Label Style="{StaticResource SectionTitleLabel}" Text="{Binding PhaseTitle}" />
                         <Label Style="{StaticResource BodyLabel}" Text="{Binding PhaseDescription}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    AutomationId="TodayCountdown"
+                    IsVisible="{Binding HasCountdown}"
+                    Padding="22,20"
+                    SemanticProperties.Description="{Binding CountdownAccessibility}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 24">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,1">
+                            <GradientStop Color="{StaticResource BrandNavy}" Offset="0" />
+                            <GradientStop Color="#263A77" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <VerticalStackLayout Spacing="16">
+                        <VerticalStackLayout Spacing="6">
+                            <Label
+                                CharacterSpacing="1.4"
+                                FontFamily="PoppinsSemiBold"
+                                FontSize="11"
+                                Text="{Binding PhaseLabel}"
+                                TextColor="{StaticResource BrandPink}" />
+                            <Label
+                                FontAutoScalingEnabled="False"
+                                FontFamily="PoppinsSemiBold"
+                                FontSize="22"
+                                Text="{Binding PhaseTitle}"
+                                TextColor="{StaticResource White}" />
+                            <Label
+                                FontSize="14"
+                                Text="{Binding PhaseDescription}"
+                                TextColor="#DDE7FF" />
+                        </VerticalStackLayout>
+
+                        <BoxView
+                            BackgroundColor="#26FFFFFF"
+                            HeightRequest="1"
+                            HorizontalOptions="Fill" />
+
+                        <Grid
+                            ColumnDefinitions="*,Auto,*,Auto,*,Auto,*"
+                            ColumnSpacing="0"
+                            RowDefinitions="Auto,Auto"
+                            RowSpacing="4">
                         <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAutoScalingEnabled="False"
                             FontFamily="PoppinsSemiBold"
-                            FontSize="17"
-                            IsVisible="{=HasCountdown}"
-                            Text="{Binding CountdownText}"
-                            TextColor="{StaticResource BrandDeepPink}" />
+                            FontSize="34"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding CountdownDays}"
+                            TextColor="{StaticResource White}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            CharacterSpacing="0.6"
+                            FontSize="12"
+                            HorizontalTextAlignment="Center"
+                            Text="Days"
+                            TextColor="#9FB0D8" />
+
+                        <BoxView
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            BackgroundColor="#33FFFFFF"
+                            HeightRequest="40"
+                            VerticalOptions="Center"
+                            WidthRequest="1" />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            FontAutoScalingEnabled="False"
+                            FontFamily="PoppinsSemiBold"
+                            FontSize="34"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding CountdownHours}"
+                            TextColor="{StaticResource White}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            CharacterSpacing="0.6"
+                            FontSize="12"
+                            HorizontalTextAlignment="Center"
+                            Text="Hours"
+                            TextColor="#9FB0D8" />
+
+                        <BoxView
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="3"
+                            BackgroundColor="#33FFFFFF"
+                            HeightRequest="40"
+                            VerticalOptions="Center"
+                            WidthRequest="1" />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="4"
+                            FontAutoScalingEnabled="False"
+                            FontFamily="PoppinsSemiBold"
+                            FontSize="34"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding CountdownMinutes}"
+                            TextColor="{StaticResource White}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            CharacterSpacing="0.6"
+                            FontSize="12"
+                            HorizontalTextAlignment="Center"
+                            Text="Minutes"
+                            TextColor="#9FB0D8" />
+
+                        <BoxView
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="5"
+                            BackgroundColor="#33FFFFFF"
+                            HeightRequest="40"
+                            VerticalOptions="Center"
+                            WidthRequest="1" />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="6"
+                            FontAutoScalingEnabled="False"
+                            FontFamily="PoppinsSemiBold"
+                            FontSize="34"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding CountdownSeconds}"
+                            TextColor="{StaticResource White}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="6"
+                            CharacterSpacing="0.6"
+                            FontSize="12"
+                            HorizontalTextAlignment="Center"
+                            Text="Seconds"
+                            TextColor="#9FB0D8" />
+                        </Grid>
                     </VerticalStackLayout>
                 </Border>
 

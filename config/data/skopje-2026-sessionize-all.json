@@ -1,0 +1,123 @@
+{
+  "sessions": [
+    {
+      "id": "1271031",
+      "title": "Building Your First .NET MAUI App Workshop",
+      "description": "Today we will build a .NET MAUI application that will display a list of Monkeys from around the world. We will start by building the business logic backend that pulls down json-encoded data from a RESTful endpoint. We will then leverage .NET MAUI to find the closest monkey to us and also show the monkey on a map. We will also see how to display data in many different ways and then finally fully theme the application.",
+      "startsAt": "2026-09-17T10:00:00",
+      "endsAt": "2026-09-17T14:00:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "b5f674c8-199a-444d-bfaf-e8f8cd8a6248"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 86493,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    },
+    {
+      "id": "1273597",
+      "title": "XAML C# Expressions, HotReload, and plenty of other improvements making XAML relevant in 2026",
+      "description": "net11 is introducing multiple improvements in the XAML language and its processing for MAUI projects, focussing on developers delight, and app performance\r\n- global, and implicit, xmlns\r\n- sourcegeneration\r\n- C# expression in XAML\r\n- incremental HotReload\r\n- and more\r\n\r\n\r\n",
+      "startsAt": "2026-09-17T16:05:00",
+      "endsAt": "2026-09-17T16:35:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "5ad7b431-a439-49ce-b663-c510d64583fe"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 86493,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    },
+    {
+      "id": "1287056",
+      "title": "AI-Assisted repository in .NET MAUI",
+      "description": "How the .NET MAUI team built specialized AI agents that automate pull request reviews, generate UI tests, reproduce bugs, and explore fix alternatives using multi-model consensus.\r\nThis is a show-and-tell of real, working automation - not a concept demo.",
+      "startsAt": "2026-09-17T16:40:00",
+      "endsAt": "2026-09-17T17:10:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "cee07da0-2b68-4f8f-a220-d0d239a935b6"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 86493,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": false
+    }
+  ],
+  "speakers": [
+    {
+      "id": "b5f674c8-199a-444d-bfaf-e8f8cd8a6248",
+      "firstName": "Gerald",
+      "lastName": "Versluis",
+      "bio": "Meet Gerald Versluis, software engineer at Microsoft, who wields the power of .NET to conquer any project that comes his way. With a career spanning over a decade, he's tackled it all, from frontend to backend and everything in between, using .NET MAUI, Azure, ASP.NET, and all the other .NET goodies. And these days of course; AI and Copilot.\r\n\r\nBut it wasn't until he discovered the magic of Xamarin that he truly fell in love with mobile and cross-platform development, becoming an active community member and sharing his knowledge through writing, tweeting, and presentations. When he's not saving the world of software, you can find him on Twitter @jfversluis, blogging at https://blog.verslu.is, or making videos on his YouTube channel: https://youtube.com/GeraldVersluis.",
+      "tagLine": "Senior Software Engineer at Microsoft",
+      "profilePicture": "https://cdn.sessionize.com/image/5989-400o400o1-XJS9YW2CA9hpY1774t84Tx.png",
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1271031
+      ],
+      "fullName": "Gerald Versluis",
+      "categoryItems": [],
+      "questionAnswers": []
+    },
+    {
+      "id": "cee07da0-2b68-4f8f-a220-d0d239a935b6",
+      "firstName": "Jakub",
+      "lastName": "Florkowski",
+      "bio": "Jakub Florkowski is a software engineer at Microsoft who started as a .NET MAUI contributor. He focuses on developer experience, mobile performance, and AI-assisted workflows, combining product engineering with open-source collaboration.",
+      "tagLine": "Software Engineer at Microsoft",
+      "profilePicture": "https://cdn.sessionize.com/image/1d61-400o400o1-4MVBK8emTKiEeM2a2o3JSv.jpg",
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1287056
+      ],
+      "fullName": "Jakub Florkowski",
+      "categoryItems": [],
+      "questionAnswers": []
+    },
+    {
+      "id": "5ad7b431-a439-49ce-b663-c510d64583fe",
+      "firstName": "Stéphane",
+      "lastName": "Delcroix",
+      "bio": "Software Engineer at Microsoft/Xamarin\r\n\r\nStéphane is a Software Engineer at Microsoft. He’s been working on MAUI (ex-Xamarin.Forms) since 2013. He’s been active in OpenSource development for the past 20+ years, and in the mono/.NET ecosystem since 2005.\r\n",
+      "tagLine": "Principal Software Engineer at Microsoft",
+      "profilePicture": "https://cdn.sessionize.com/image/8ffa-400o400o1-GbBKW1zqLHMJGD7yZSpKDk.jpg",
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1273597
+      ],
+      "fullName": "Stéphane Delcroix",
+      "categoryItems": [],
+      "questionAnswers": []
+    }
+  ],
+  "questions": [],
+  "categories": [],
+  "rooms": [
+    {
+      "id": 86493,
+      "name": "Room 1",
+      "sort": 0
+    }
+  ]
+}

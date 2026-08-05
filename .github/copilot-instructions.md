@@ -9,7 +9,7 @@ files it points at. Keep it up to date when architecture or conventions change.
 
 A **.NET MAUI** companion app for **MAUI Day**, a single-day / single-track technical
 conference about .NET MAUI. The event data is powered by **Sessionize**. The app is
-branded after mauiday.net and currently targets the **Cologne 2026** instance, but is
+branded after mauiday.net and currently targets the **Skopje 2026** instance, but is
 built to be re-pointed at other MAUI Day instances via config (see *Data flow*).
 
 Core features: Today/overview, full Schedule, Speakers, session ⇄ speaker
@@ -69,7 +69,7 @@ unit tests); keep `MauiDay.App` thin (XAML, view models, DI wiring, platform ser
   retry, caches via `IAppStorage`, and falls back to bundled assets when offline. It
   publishes an immutable `AppDataSnapshot` the view models observe.
 - **Time:** all event times go through `IEventTimeService` (`EventTimeService`) so the
-  app shows **event-local time** (Cologne, Europe/Berlin) regardless of device zone.
+  app shows **event-local time** (currently Skopje, Europe/Skopje) regardless of device zone.
   Don't format Sessionize times directly — normalize through this service.
 - **Mapping:** `SessionizeMapper` turns raw Sessionize DTOs into domain models; it filters
   hidden/dropped sessions out of speaker session lists. Enum config values use
@@ -82,8 +82,8 @@ program changes. Chain:
 
 1. `AppDataService` fetches **`config/bootstrap.json`** (from
    `raw.githubusercontent.com/MauiDay/event-app/main/config/bootstrap.json`) → picks the
-   `activeEventId` (currently `cologne-2026`).
-2. That points at the event config **`config/events/cologne-2026.json`**, which contains
+   `activeEventId` (currently `skopje-2026`).
+2. That points at the event config **`config/events/skopje-2026.json`**, which contains
    the Sessionize `AllDataUrl` (live endpoint) plus a `BundledDataAsset` fallback and
    partner/venue metadata.
 3. Live Sessionize data is fetched, mapped, and cached; on failure it falls back to cache,
@@ -91,7 +91,7 @@ program changes. Chain:
 
 To change what the app shows, edit the JSON under `config/` on `main` (validated by the
 schemas in `config/schema/`) — **do not** hardcode event data in the app. Sessionize
-identifier for the source event is `o0aj9rpg`.
+identifier for the active event is `q9b8reb9`.
 
 ## Build, test, run
 

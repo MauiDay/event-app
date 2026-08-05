@@ -14,7 +14,7 @@ public sealed partial class EditionViewModel(
     private Uri? _ticketsUrl;
 
     [ObservableProperty]
-    private string _editionLabel = "Cologne 2026";
+    private string _editionLabel = "MAUI Day";
 
     [ObservableProperty]
     private string _eventName = "MAUI Day";

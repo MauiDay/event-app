@@ -1,6 +1,7 @@
 using System.Text.Json;
 using MauiDay.Core.Configuration;
 using MauiDay.Core.Serialization;
+using MauiDay.Core.Sessionize;
 using MauiDay.Core.Validation;
 
 namespace MauiDay.App.Tests;
@@ -8,29 +9,34 @@ namespace MauiDay.App.Tests;
 public sealed class ConfigurationContractTests
 {
     [Fact]
-    public void BundledBootstrapSelectsCologne()
+    public void BundledBootstrapSelectsSkopje()
     {
         var bootstrap = FixtureLoader.Load<AppBootstrap>("config/bootstrap.json");
 
         ConfigurationValidator.Validate(bootstrap);
 
-        Assert.Equal("cologne-2026", bootstrap.ActiveEventId);
+        Assert.Equal("skopje-2026", bootstrap.ActiveEventId);
+        Assert.Contains(bootstrap.Events, descriptor => descriptor.Id == "skopje-2026");
         Assert.Contains(bootstrap.Events, descriptor => descriptor.Id == "cologne-2026");
     }
 
     [Fact]
-    public void BundledCologneConfigContainsExpectedSourceFacts()
+    public void BundledSkopjeConfigContainsExpectedSourceFacts()
     {
-        var config = FixtureLoader.LoadEventConfiguration();
+        var config = FixtureLoader.LoadEventConfiguration("skopje-2026");
+        var sessionize = FixtureLoader.Load<SessionizeAllDto>(
+            "config/data/skopje-2026-sessionize-all.json");
 
-        Assert.Equal(new DateOnly(2026, 10, 23), config.Date);
-        Assert.Equal("Europe/Berlin", config.TimeZone);
-        Assert.Equal("o0aj9rpg", config.Sessionize.EventId);
+        Assert.Equal(new DateOnly(2026, 9, 17), config.Date);
+        Assert.Equal("Europe/Skopje", config.TimeZone);
+        Assert.Equal("q9b8reb9", config.Sessionize.EventId);
         Assert.Equal(ScheduleStatus.Preview, config.ScheduleStatus);
-        Assert.Equal("Microsoft Cologne Office", config.Venue.Name);
-        Assert.Equal(160, config.Venue.Capacity);
-        Assert.Single(config.Partners, partner => partner.Tier == PartnerTier.Sponsor);
-        Assert.Equal(4, config.Partners.Count(partner => partner.Tier == PartnerTier.Supporter));
+        Assert.Equal("Faculty of Computer Science & Engineering", config.Venue.Name);
+        Assert.Equal(70, config.Venue.Capacity);
+        Assert.Equal(2, config.Partners.Count(partner => partner.Tier == PartnerTier.Sponsor));
+        Assert.Equal(6, config.Partners.Count(partner => partner.Tier == PartnerTier.Supporter));
+        Assert.NotEmpty(sessionize.Sessions);
+        Assert.NotEmpty(sessionize.Speakers);
     }
 
     [Fact]

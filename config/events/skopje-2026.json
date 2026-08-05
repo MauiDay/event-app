@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "id": "skopje-2026",
+  "name": "MAUI Day Skopje",
+  "editionLabel": "Skopje 2026",
+  "city": "Skopje",
+  "country": "North Macedonia",
+  "date": "2026-09-17",
+  "timeZone": "Europe/Skopje",
+  "scheduleStatus": "preview",
+  "sessionize": {
+    "eventId": "q9b8reb9",
+    "allDataUrl": "https://sessionize.com/api/v2/q9b8reb9/view/All",
+    "bundledDataAsset": "config/data/skopje-2026-sessionize-all.json"
+  },
+  "venue": {
+    "name": "Faculty of Computer Science & Engineering",
+    "addressLine1": "Ruger Boskovik 16",
+    "postalCode": "1000",
+    "city": "Skopje",
+    "country": "North Macedonia",
+    "capacity": 70,
+    "arrivalNotes": "",
+    "transit": "Bus stop 5 minutes walk",
+    "parking": "Parking available nearby",
+    "mapsUrl": "https://maps.app.goo.gl/qUjmgxXHBQTZYQSD8"
+  },
+  "links": {
+    "website": "https://mauiday.net/skopje",
+    "tickets": "https://www.eventbrite.nl/e/net-maui-day-skopje-2026-tickets-1992309951697",
+    "codeOfConduct": "https://mauiday.net/code-of-conduct",
+    "privacy": "https://mauiday.net/privacy"
+  },
+  "organizers": [
+    {
+      "name": "Gerald Versluis",
+      "email": "gerald@verslu.is"
+    },
+    {
+      "name": "Tony Edwards",
+      "email": "tony@mauiday.net"
+    }
+  ],
+  "socialLinks": [
+    {
+      "title": "YouTube",
+      "url": "https://www.youtube.com/@mauiday"
+    },
+    {
+      "title": "LinkedIn",
+      "url": "https://www.linkedin.com/company/maui-day"
+    },
+    {
+      "title": "Bluesky",
+      "url": "https://bsky.app/profile/mauiday.net"
+    }
+  ],
+  "partners": [
+    {
+      "name": "Syncfusion",
+      "tier": "sponsor",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/syncfusion.png",
+      "websiteUrl": "https://syncfusion.com/"
+    },
+    {
+      "name": "Xessable",
+      "tier": "sponsor",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/xessable.png",
+      "websiteUrl": "https://www.xessable.com/"
+    },
+    {
+      "name": "Microsoft",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/microsoft.png",
+      "websiteUrl": "https://www.microsoft.com"
+    },
+    {
+      "name": "Sessionize",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/sessionize.png",
+      "websiteUrl": "https://sessionize.com/"
+    },
+    {
+      "name": "Grial UI Kit",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/grial.png",
+      "websiteUrl": "https://grialkit.com/"
+    },
+    {
+      "name": "UX Divers",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/ux-divers.png",
+      "websiteUrl": "https://uxdivers.com/"
+    },
+    {
+      "name": "WhatTheStack",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/what-the-stack.png",
+      "websiteUrl": "https://wts.sh/"
+    },
+    {
+      "name": "MAUI North Macedonia",
+      "tier": "supporter",
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/maui-north-macedonia-group.png",
+      "websiteUrl": "https://www.linkedin.com/groups/16015002/"
+    }
+  ],
+  "brand": {
+    "editionBadgeUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/editions/skopje26.png",
+    "bundledEditionBadge": "skopje26.png",
+    "primaryColor": "#0B1D51",
+    "accentColor": "#9780E5"
+  },
+  "sessionOverrides": {}
+}

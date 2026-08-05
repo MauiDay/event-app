@@ -19,19 +19,19 @@ public sealed partial class TodayViewModel : DataViewModel
     private string? _nextSessionId;
 
     [ObservableProperty]
-    private string _eventName = "MAUI Day Cologne";
+    private string _eventName = "MAUI Day";
 
     [ObservableProperty]
-    private string _editionLabel = "Cologne 2026";
+    private string _editionLabel = "Upcoming event";
 
     [ObservableProperty]
-    private string _dateText = "23 October 2026";
+    private string _dateText = string.Empty;
 
     [ObservableProperty]
     private string _phaseLabel = "NEXT UP";
 
     [ObservableProperty]
-    private string _phaseTitle = "Cologne is next";
+    private string _phaseTitle = "MAUI Day is next";
 
     [ObservableProperty]
     private string _phaseDescription = "The published program is still taking shape.";
@@ -75,10 +75,10 @@ public sealed partial class TodayViewModel : DataViewModel
     private SessionCardModel? _nextSession;
 
     [ObservableProperty]
-    private string _venueName = "Microsoft Cologne Office";
+    private string _venueName = "Venue details coming soon";
 
     [ObservableProperty]
-    private string _locationText = "Holzmarkt 2, 50676 Köln";
+    private string _locationText = string.Empty;
 
     public bool HasCurrentSession => CurrentSession is not null;
 
@@ -156,7 +156,7 @@ public sealed partial class TodayViewModel : DataViewModel
         {
             TodayPhase.PreEvent => (
                 "NEXT UP",
-                "Cologne is next",
+                $"{snapshot.Event.City} is next",
                 "One focused day for .NET MAUI builders."),
             TodayPhase.EventDayBeforeStart => (
                 "TODAY",
@@ -177,7 +177,7 @@ public sealed partial class TodayViewModel : DataViewModel
             TodayPhase.PostEvent => (
                 "THAT'S A WRAP",
                 "Thanks for joining MAUI Day",
-                "Revisit the speakers and sessions from Cologne."),
+                $"Revisit the speakers and sessions from {snapshot.Event.City}."),
             _ => throw new InvalidOperationException("Unknown Today phase."),
         };
 

@@ -8,10 +8,10 @@ namespace MauiDay.App.Tests;
 
 internal static class FixtureLoader
 {
-    public static EventConfiguration LoadEventConfiguration()
+    public static EventConfiguration LoadEventConfiguration(string eventId = "cologne-2026")
     {
-        var config = Load<EventConfiguration>("config/events/cologne-2026.json");
-        ConfigurationValidator.Validate(config, "cologne-2026");
+        var config = Load<EventConfiguration>($"config/events/{eventId}.json");
+        ConfigurationValidator.Validate(config, eventId);
         return config;
     }
 

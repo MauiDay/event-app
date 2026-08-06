@@ -25,6 +25,9 @@ public sealed partial class TodayViewModel : DataViewModel
     private string _editionLabel = "Upcoming event";
 
     [ObservableProperty]
+    private string _editionBadge = string.Empty;
+
+    [ObservableProperty]
     private string _dateText = string.Empty;
 
     [ObservableProperty]
@@ -79,6 +82,9 @@ public sealed partial class TodayViewModel : DataViewModel
 
     [ObservableProperty]
     private string _locationText = string.Empty;
+
+    [ObservableProperty]
+    private string _cityLabel = string.Empty;
 
     public bool HasCurrentSession => CurrentSession is not null;
 
@@ -141,10 +147,12 @@ public sealed partial class TodayViewModel : DataViewModel
 
         EventName = snapshot.Event.Name;
         EditionLabel = snapshot.Event.EditionLabel;
+        EditionBadge = snapshot.Event.Brand.BundledEditionBadge;
         DateText = snapshot.Event.Date.ToString("dddd, d MMMM yyyy", CultureInfo.CurrentCulture);
         VenueName = snapshot.Event.Venue.Name;
         LocationText =
             $"{snapshot.Event.Venue.AddressLine1}, {snapshot.Event.Venue.PostalCode} {snapshot.Event.Venue.City}";
+        CityLabel = snapshot.Event.City.ToUpperInvariant();
         CurrentSession = state.CurrentSession is null
             ? null
             : SessionCardModel.Create(snapshot, state.CurrentSession, now);

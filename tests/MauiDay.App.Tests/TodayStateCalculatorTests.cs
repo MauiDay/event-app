@@ -20,17 +20,17 @@ public sealed class TodayStateCalculatorTests
         var atStart = calculator.Calculate(
             configuration,
             conference,
-            new DateTimeOffset(2026, 10, 23, 7, 0, 0, TimeSpan.Zero));
+            new DateTimeOffset(2026, 9, 17, 8, 0, 0, TimeSpan.Zero));
         var atEnd = calculator.Calculate(
             configuration,
             conference,
-            new DateTimeOffset(2026, 10, 23, 8, 0, 0, TimeSpan.Zero));
+            new DateTimeOffset(2026, 9, 17, 12, 0, 0, TimeSpan.Zero));
 
         Assert.Equal(TodayPhase.Live, atStart.Phase);
-        Assert.Equal("1272305", atStart.CurrentSession?.Id);
+        Assert.Equal("1271031", atStart.CurrentSession?.Id);
         Assert.Equal(TodayPhase.BetweenSessions, atEnd.Phase);
         Assert.Null(atEnd.CurrentSession);
-        Assert.Equal("1272319", atEnd.NextSession?.Id);
+        Assert.Equal("1273597", atEnd.NextSession?.Id);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public sealed class TodayStateCalculatorTests
         var state = new TodayStateCalculator(_timeService).Calculate(
             configuration,
             conference,
-            new DateTimeOffset(2026, 10, 22, 21, 0, 0, TimeSpan.Zero));
+            new DateTimeOffset(2026, 9, 16, 21, 0, 0, TimeSpan.Zero));
 
         Assert.Equal(TodayPhase.PreEvent, state.Phase);
         Assert.True(state.TimeUntilEvent >= TimeSpan.Zero);
@@ -61,7 +61,7 @@ public sealed class TodayStateCalculatorTests
         var state = new TodayStateCalculator(_timeService).Calculate(
             configuration,
             conference,
-            new DateTimeOffset(2026, 10, 23, 15, 0, 0, TimeSpan.Zero));
+            new DateTimeOffset(2026, 9, 17, 16, 0, 0, TimeSpan.Zero));
 
         Assert.Equal(TodayPhase.PostEvent, state.Phase);
         Assert.Null(state.NextSession);
@@ -73,9 +73,9 @@ public sealed class TodayStateCalculatorTests
     {
         var configuration = FixtureLoader.LoadEventConfiguration();
         var start = _timeService.ParseSessionizeTimestamp(
-            "2026-10-23T09:00:00", configuration.TimeZone);
+            "2026-09-17T10:00:00", configuration.TimeZone);
         var end = _timeService.ParseSessionizeTimestamp(
-            "2026-10-23T10:00:00", configuration.TimeZone);
+            "2026-09-17T11:00:00", configuration.TimeZone);
         var conference = new ConferenceData(
             [
                 new EventSession(
@@ -87,7 +87,7 @@ public sealed class TodayStateCalculatorTests
             []);
 
         var now = _timeService.ParseSessionizeTimestamp(
-            "2026-10-23T09:30:00", configuration.TimeZone);
+            "2026-09-17T10:30:00", configuration.TimeZone);
         var state = new TodayStateCalculator(_timeService).Calculate(
             configuration, conference, now);
 

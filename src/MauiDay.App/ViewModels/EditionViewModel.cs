@@ -20,6 +20,9 @@ public sealed partial class EditionViewModel(
     private string _eventName = "MAUI Day";
 
     [ObservableProperty]
+    private string _editionBadge = string.Empty;
+
+    [ObservableProperty]
     private string _dateText = string.Empty;
 
     [ObservableProperty]
@@ -43,6 +46,7 @@ public sealed partial class EditionViewModel(
         _venue = @event.Venue;
         _ticketsUrl = @event.Links.Tickets;
         EditionLabel = @event.EditionLabel;
+        EditionBadge = @event.Brand.BundledEditionBadge;
         EventName = @event.Name;
         DateText = @event.Date.ToString("dddd, d MMMM yyyy", CultureInfo.CurrentCulture);
         LocationText = $"{@event.City}, {@event.Country}";

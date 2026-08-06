@@ -166,3 +166,7 @@ polishing a specific screen's UI/UX, adding a new Info sub-page, enriching partn
 data via `config/`, hardening the data/refresh path, or improving accessibility. Start a
 new session per task, point it at this file, and give it the concrete goal + definition of
 done.
+
+Use the `retarget-active-event` repository skill whenever changing the active MAUI Day
+edition. It includes the configuration, fixture, UI, asset, screenshot, and stale-reference
+checks that must move together.

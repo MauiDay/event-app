@@ -28,7 +28,7 @@
                         HeightRequest="132"
                         HorizontalOptions="Center"
                         SemanticProperties.Description="Edition patch"
-                        Source="cologne26.png" />
+                        Source="{Binding EditionBadge}" />
                     <VerticalStackLayout Spacing="6">
                         <Label
                             FontFamily="PoppinsSemiBold"

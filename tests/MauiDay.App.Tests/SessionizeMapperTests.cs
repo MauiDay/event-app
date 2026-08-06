@@ -17,7 +17,9 @@ public sealed class SessionizeMapperTests
         Assert.Equal(3, result.Sessions.Count);
         Assert.Equal(3, result.Speakers.Count);
         Assert.Single(result.Rooms);
-        Assert.All(result.Sessions, session => Assert.Equal(TimeSpan.FromHours(1), session.Duration));
+        Assert.Equal(
+            [TimeSpan.FromHours(4), TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(30)],
+            result.Sessions.Select(session => session.Duration));
         Assert.All(result.Sessions, session => Assert.Equal(TimeSpan.FromHours(2), session.StartsAt.Offset));
     }
 
@@ -54,8 +56,8 @@ public sealed class SessionizeMapperTests
                 {
                     Id = "1",
                     Title = "Linked via session",
-                    StartsAt = "2026-10-23T09:00:00",
-                    EndsAt = "2026-10-23T10:00:00",
+                    StartsAt = "2026-09-17T10:00:00",
+                    EndsAt = "2026-09-17T11:00:00",
                     Speakers = ["S1"],
                     RoomId = 1,
                 },
@@ -63,8 +65,8 @@ public sealed class SessionizeMapperTests
                 {
                     Id = "2",
                     Title = "Linked only via speaker",
-                    StartsAt = "2026-10-23T11:00:00",
-                    EndsAt = "2026-10-23T12:00:00",
+                    StartsAt = "2026-09-17T12:00:00",
+                    EndsAt = "2026-09-17T13:00:00",
                     Speakers = [],
                     RoomId = 1,
                 },

@@ -46,7 +46,7 @@
                             HeightRequest="112"
                             HorizontalOptions="Center"
                             SemanticProperties.Description=""
-                            Source="cologne26.png"
+                            Source="{Binding EditionBadge}"
                             VerticalOptions="Center"
                             WidthRequest="112" />
                         <VerticalStackLayout
@@ -297,7 +297,7 @@
                         <TapGestureRecognizer Command="{Binding OpenVenueCommand}" />
                     </Border.GestureRecognizers>
                     <VerticalStackLayout Spacing="6">
-                        <Label Style="{StaticResource EyebrowLabel}" Text="COLOGNE" />
+                        <Label Style="{StaticResource EyebrowLabel}" Text="{Binding CityLabel}" />
                         <Label Style="{StaticResource CardTitleLabel}" Text="{Binding VenueName}" />
                         <Label Style="{StaticResource SecondaryLabel}" Text="{Binding LocationText}" />
                     </VerticalStackLayout>

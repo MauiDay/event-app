@@ -16,16 +16,15 @@ public sealed class ConfigurationContractTests
         ConfigurationValidator.Validate(bootstrap);
 
         Assert.Equal("skopje-2026", bootstrap.ActiveEventId);
-        Assert.Contains(bootstrap.Events, descriptor => descriptor.Id == "skopje-2026");
-        Assert.Contains(bootstrap.Events, descriptor => descriptor.Id == "cologne-2026");
+        var descriptor = Assert.Single(bootstrap.Events);
+        Assert.Equal(bootstrap.ActiveEventId, descriptor.Id);
     }
 
     [Fact]
     public void BundledSkopjeConfigContainsExpectedSourceFacts()
     {
-        var config = FixtureLoader.LoadEventConfiguration("skopje-2026");
-        var sessionize = FixtureLoader.Load<SessionizeAllDto>(
-            "config/data/skopje-2026-sessionize-all.json");
+        var config = FixtureLoader.LoadEventConfiguration();
+        var sessionize = FixtureLoader.LoadSessionizeData();
 
         Assert.Equal(new DateOnly(2026, 9, 17), config.Date);
         Assert.Equal("Europe/Skopje", config.TimeZone);

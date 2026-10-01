@@ -9,18 +9,24 @@ public sealed class SessionizeMapperTests
     public void BundledPayloadNormalizesSessionsSpeakersAndRooms()
     {
         var mapper = new SessionizeMapper(new EventTimeService());
+        var configuration = FixtureLoader.LoadEventConfiguration();
 
         var result = mapper.Map(
             FixtureLoader.LoadSessionizeData(),
-            FixtureLoader.LoadEventConfiguration());
+            configuration);
 
-        Assert.Equal(3, result.Sessions.Count);
-        Assert.Equal(3, result.Speakers.Count);
+        Assert.Equal(6, result.Sessions.Count);
+        Assert.Equal(6, result.Speakers.Count);
         Assert.Single(result.Rooms);
         Assert.Equal(
-            [TimeSpan.FromHours(4), TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(30)],
+            [
+                TimeSpan.FromMinutes(60), TimeSpan.FromMinutes(45), TimeSpan.FromMinutes(30),
+                TimeSpan.FromMinutes(60), TimeSpan.FromMinutes(45), TimeSpan.FromMinutes(60),
+            ],
             result.Sessions.Select(session => session.Duration));
         Assert.All(result.Sessions, session => Assert.Equal(TimeSpan.FromHours(2), session.StartsAt.Offset));
+        Assert.All(result.Sessions, session =>
+            Assert.Equal(configuration.Date, DateOnly.FromDateTime(session.StartsAt.DateTime)));
     }
 
     [Fact]
@@ -56,8 +62,8 @@ public sealed class SessionizeMapperTests
                 {
                     Id = "1",
                     Title = "Linked via session",
-                    StartsAt = "2026-09-17T10:00:00",
-                    EndsAt = "2026-09-17T11:00:00",
+                    StartsAt = $"{config.Date:yyyy-MM-dd}T10:00:00",
+                    EndsAt = $"{config.Date:yyyy-MM-dd}T11:00:00",
                     Speakers = ["S1"],
                     RoomId = 1,
                 },
@@ -65,8 +71,8 @@ public sealed class SessionizeMapperTests
                 {
                     Id = "2",
                     Title = "Linked only via speaker",
-                    StartsAt = "2026-09-17T12:00:00",
-                    EndsAt = "2026-09-17T13:00:00",
+                    StartsAt = $"{config.Date:yyyy-MM-dd}T12:00:00",
+                    EndsAt = $"{config.Date:yyyy-MM-dd}T13:00:00",
                     Speakers = [],
                     RoomId = 1,
                 },

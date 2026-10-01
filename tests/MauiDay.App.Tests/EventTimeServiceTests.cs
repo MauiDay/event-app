@@ -7,13 +7,13 @@ public sealed class EventTimeServiceTests
     private readonly EventTimeService _service = new();
 
     [Fact]
-    public void OffsetlessSummerTimestampIsInterpretedAsSkopjeWallClock()
+    public void OffsetlessSummerTimestampIsInterpretedAsCologneWallClock()
     {
         var result = _service.ParseSessionizeTimestamp(
-            "2026-09-17T10:00:00",
-            "Europe/Skopje");
+            "2026-10-23T10:00:00",
+            "Europe/Berlin");
 
-        Assert.Equal(new DateTimeOffset(2026, 9, 17, 10, 0, 0, TimeSpan.FromHours(2)), result);
+        Assert.Equal(new DateTimeOffset(2026, 10, 23, 10, 0, 0, TimeSpan.FromHours(2)), result);
     }
 
     [Fact]
@@ -21,7 +21,7 @@ public sealed class EventTimeServiceTests
     {
         var result = _service.ParseSessionizeTimestamp(
             "2026-12-23T09:00:00",
-            "Europe/Skopje");
+            "Europe/Berlin");
 
         Assert.Equal(TimeSpan.FromHours(1), result.Offset);
     }
@@ -30,8 +30,8 @@ public sealed class EventTimeServiceTests
     public void ExplicitOffsetTimestampIsConvertedIntoEventTime()
     {
         var result = _service.ParseSessionizeTimestamp(
-            "2026-09-17T08:00:00Z",
-            "Europe/Skopje");
+            "2026-10-23T08:00:00Z",
+            "Europe/Berlin");
 
         Assert.Equal(10, result.Hour);
         Assert.Equal(TimeSpan.FromHours(2), result.Offset);
@@ -43,18 +43,18 @@ public sealed class EventTimeServiceTests
         Assert.Throws<FormatException>(
             () => _service.ParseSessionizeTimestamp(
                 "2026-03-29T02:30:00",
-                "Europe/Skopje"));
+                "Europe/Berlin"));
     }
 
     [Fact]
     public void DescribeTimeZoneReportsCityAndSummerOffsetOnEventDay()
     {
         var label = _service.DescribeTimeZone(
-            "Europe/Skopje",
-            new DateOnly(2026, 9, 17),
-            "Skopje");
+            "Europe/Berlin",
+            new DateOnly(2026, 10, 23),
+            "Cologne");
 
-        Assert.Contains("Skopje", label);
+        Assert.Contains("Cologne", label);
         Assert.Contains("UTC+02:00", label);
     }
 }

@@ -1,33 +1,33 @@
 {
   "schemaVersion": 1,
-  "id": "skopje-2026",
-  "name": "MAUI Day Skopje",
-  "editionLabel": "Skopje 2026",
-  "city": "Skopje",
-  "country": "North Macedonia",
-  "date": "2026-09-17",
-  "timeZone": "Europe/Skopje",
-  "scheduleStatus": "preview",
+  "id": "cologne-2026",
+  "name": "MAUI Day Cologne",
+  "editionLabel": "Cologne 2026",
+  "city": "Cologne",
+  "country": "Germany",
+  "date": "2026-10-23",
+  "timeZone": "Europe/Berlin",
+  "scheduleStatus": "published",
   "sessionize": {
-    "eventId": "q9b8reb9",
-    "allDataUrl": "https://sessionize.com/api/v2/q9b8reb9/view/All",
-    "bundledDataAsset": "config/data/skopje-2026-sessionize-all.json"
+    "eventId": "o0aj9rpg",
+    "allDataUrl": "https://sessionize.com/api/v2/o0aj9rpg/view/All",
+    "bundledDataAsset": "config/data/cologne-2026-sessionize-all.json"
   },
   "venue": {
-    "name": "Faculty of Computer Science & Engineering",
-    "addressLine1": "Ruger Boskovik 16",
-    "postalCode": "1000",
-    "city": "Skopje",
-    "country": "North Macedonia",
-    "capacity": 70,
-    "arrivalNotes": "",
-    "transit": "Bus stop 5 minutes walk",
-    "parking": "Parking available nearby",
-    "mapsUrl": "https://maps.app.goo.gl/qUjmgxXHBQTZYQSD8"
+    "name": "Microsoft, Cologne Office",
+    "addressLine1": "Holzmarkt 2",
+    "postalCode": "50676",
+    "city": "Cologne",
+    "country": "Germany",
+    "capacity": 100,
+    "arrivalNotes": "Doors open at 08:30.",
+    "transit": "Train station 15 min walk",
+    "parking": "Public parking nearby",
+    "mapsUrl": "https://maps.app.goo.gl/svuLsiq8zKZaVxY19"
   },
   "links": {
-    "website": "https://mauiday.net/skopje",
-    "tickets": "https://www.eventbrite.nl/e/net-maui-day-skopje-2026-tickets-1992309951697",
+    "website": "https://mauiday.net/cologne",
+    "tickets": "https://www.eventbrite.nl/e/net-maui-day-cologne-2026-tickets-1990687626278",
     "codeOfConduct": "https://mauiday.net/code-of-conduct",
     "privacy": "https://mauiday.net/privacy"
   },
@@ -37,8 +37,8 @@
       "email": "gerald@verslu.is"
     },
     {
-      "name": "Tony Edwards",
-      "email": "tony@mauiday.net"
+      "name": "Shaun Lawrence",
+      "email": "shaun@mauiday.net"
     }
   ],
   "socialLinks": [
@@ -63,10 +63,10 @@
       "websiteUrl": "https://syncfusion.com/"
     },
     {
-      "name": "Xessable",
+      "name": "Telerik",
       "tier": "sponsor",
-      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/xessable.png",
-      "websiteUrl": "https://www.xessable.com/"
+      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/progress.png",
+      "websiteUrl": "https://www.telerik.com/maui-ui"
     },
     {
       "name": "Microsoft",
@@ -91,23 +91,11 @@
       "tier": "supporter",
       "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/ux-divers.png",
       "websiteUrl": "https://uxdivers.com/"
-    },
-    {
-      "name": "WhatTheStack",
-      "tier": "supporter",
-      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/what-the-stack.png",
-      "websiteUrl": "https://wts.sh/"
-    },
-    {
-      "name": "MAUI North Macedonia",
-      "tier": "supporter",
-      "logoUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/sponsors/maui-north-macedonia-group.png",
-      "websiteUrl": "https://www.linkedin.com/groups/16015002/"
     }
   ],
   "brand": {
-    "editionBadgeUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/editions/skopje26.png",
-    "bundledEditionBadge": "skopje26.png",
+    "editionBadgeUrl": "https://raw.githubusercontent.com/MauiDay/website/main/public/images/editions/cologne26.png",
+    "bundledEditionBadge": "cologne26.png",
     "primaryColor": "#0B1D51",
     "accentColor": "#9780E5"
   },

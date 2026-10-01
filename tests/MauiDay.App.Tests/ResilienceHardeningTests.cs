@@ -77,7 +77,7 @@ public sealed class ResilienceHardeningTests
         var bootstrap = new AppBootstrap
         {
             SchemaVersion = AppBootstrap.CurrentSchemaVersion,
-            ActiveEventId = "skopje-2026",
+            ActiveEventId = "event",
             Events = null!,
         };
 
@@ -96,8 +96,8 @@ public sealed class ResilienceHardeningTests
     [InlineData("sessionOverrides")]
     public void EventConfigWithNullRequiredSectionIsRejectedGracefully(string property)
     {
-        var path = Path.Combine(AppContext.BaseDirectory, "config/events/skopje-2026.json");
-        var node = JsonNode.Parse(File.ReadAllText(path))!.AsObject();
+        var validConfig = FixtureLoader.LoadEventConfiguration();
+        var node = JsonSerializer.SerializeToNode(validConfig, MauiDayJson.Options)!.AsObject();
         node[property] = null;
 
         var config = JsonSerializer.Deserialize<EventConfiguration>(
@@ -105,6 +105,6 @@ public sealed class ResilienceHardeningTests
             MauiDayJson.Options)!;
 
         Assert.Throws<ConfigurationValidationException>(
-            () => ConfigurationValidator.Validate(config, "skopje-2026"));
+            () => ConfigurationValidator.Validate(config, validConfig.Id));
     }
 }

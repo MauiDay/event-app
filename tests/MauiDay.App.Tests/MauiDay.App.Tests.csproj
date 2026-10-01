@@ -26,6 +26,9 @@
     <None Include="..\..\config\**\*.json"
           Link="config\%(RecursiveDir)%(Filename)%(Extension)"
           CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\src\MauiDay.App\Resources\Images\*.png"
+          Link="images\%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

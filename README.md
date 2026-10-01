@@ -1,7 +1,7 @@
 # MAUI Day companion
 
 A .NET MAUI companion for MAUI Day events. The active edition targets
-[MAUI Day Skopje 2026](https://mauiday.net/skopje) and provides a time-aware Today
+[MAUI Day Cologne 2026](https://mauiday.net/cologne) and provides a time-aware Today
 view, a single-track schedule, speaker and session details, venue guidance, partners,
 and the Code of Conduct.
 
@@ -33,11 +33,14 @@ file under `config/events/`; that file defines the date, timezone, Sessionize en
 venue, links, organizers, partners, brand assets, schedule state, and optional session
 overrides. The same checked-in files are bundled into the app as offline fallbacks.
 
-To update Skopje:
+The active event is on **23 October 2026** at **Microsoft, Cologne Office**,
+Holzmarkt 2, 50676 Cologne, Germany. Times are shown in `Europe/Berlin`.
 
-1. Update `config/events/skopje-2026.json`.
-2. Replace `config/data/skopje-2026-sessionize-all.json` with a validated snapshot from
-   `https://sessionize.com/api/v2/q9b8reb9/view/All` when the bundled fallback should
+To update Cologne:
+
+1. Update `config/events/cologne-2026.json`.
+2. Replace `config/data/cologne-2026-sessionize-all.json` with a validated snapshot from
+   `https://sessionize.com/api/v2/o0aj9rpg/view/All` when the bundled fallback should
    change.
 3. Keep `schemaVersion` compatible with `config/schema/` and run the tests.
 
@@ -47,6 +50,9 @@ To add an event:
 2. Add the event descriptor to `config/bootstrap.json`.
 3. Set `activeEventId` when the new event should open by default.
 4. Add or bundle any event-specific brand asset referenced by the configuration.
+
+Publish configuration changes to `main` to update the live feed. Until then, online
+builds can still refresh to the previously published edition.
 
 Remote documents are accepted only after validation. A failed, partial, or incompatible
 refresh never replaces valid bundled or cached data.

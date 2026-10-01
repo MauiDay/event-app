@@ -16,7 +16,10 @@ internal static class FixtureLoader
 
     public static EventConfiguration LoadEventConfiguration(string eventId)
     {
-        var config = Load<EventConfiguration>($"config/events/{eventId}.json");
+        var bootstrap = Load<AppBootstrap>("config/bootstrap.json");
+        ConfigurationValidator.Validate(bootstrap);
+        var descriptor = bootstrap.Events.Single(item => item.Id == eventId);
+        var config = Load<EventConfiguration>(descriptor.BundledConfigAsset);
         ConfigurationValidator.Validate(config, eventId);
         return config;
     }
